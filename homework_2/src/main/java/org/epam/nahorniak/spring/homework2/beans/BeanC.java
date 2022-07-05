@@ -5,16 +5,15 @@ public class BeanC extends BeanParent {
         super(name, value);
     }
 
-    public BeanC(){}
+    public BeanC() {
+    }
 
-    public void beanCInitMethod(){
+    public void beanCInitMethod() {
         System.out.println("beanC init method!");
     }
 
-    public void beanCDestructionMethod(){
+    public void beanCDestructionMethod() {
         System.out.println("beanC destruction method!");
     }
-
-
 
 }

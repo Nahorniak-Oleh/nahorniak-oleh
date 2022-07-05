@@ -9,13 +9,15 @@ public class BeanB extends BeanParent {
     public BeanB() {
     }
 
-    public void beanBInitMethod(){
+    public void beanBInitMethod() {
         System.out.println("beanB init method!");
     }
 
-    public void beanBDestructionMethod(){
+    public void beanBDestructionMethod() {
         System.out.println("beanB destruction method!");
     }
 
-    public void beanBAdditionalInitMethod(){ System.out.println("additional beanB init method!"); }
+    public void beanBAdditionalInitMethod() {
+        System.out.println("additional beanB init method!");
+    }
 }

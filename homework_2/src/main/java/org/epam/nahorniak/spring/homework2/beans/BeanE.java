@@ -12,12 +12,12 @@ public class BeanE extends BeanParent {
     }
 
     @PostConstruct
-    public void initMethod(){
+    public void initMethod() {
         System.out.println("BeanE init method using PostConstruct annotation");
     }
 
     @PreDestroy
-    public void destroyMethod(){
+    public void destroyMethod() {
         System.out.println("BeanE destroy method using PreDestroy annotation");
     }
 

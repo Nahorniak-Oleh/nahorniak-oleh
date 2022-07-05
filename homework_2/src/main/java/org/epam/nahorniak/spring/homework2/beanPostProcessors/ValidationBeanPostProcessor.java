@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 public class ValidationBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if(bean instanceof MyValidator){
-            ((MyValidator)bean).validate();
-            System.out.println("validation for "+ beanName + " was successfully performed");
+        if (bean instanceof MyValidator) {
+            ((MyValidator) bean).validate();
+            System.out.println("validation for " + beanName + " was successfully performed");
         }
         return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
     }

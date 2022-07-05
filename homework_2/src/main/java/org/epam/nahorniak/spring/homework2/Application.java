@@ -9,6 +9,7 @@ public class Application {
     public static void main(String[] args) {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(FirstPartBeansConfiguration.class);
         System.out.println("\n------------------ApplicationContext--------------------");
+
         for (String beanName : applicationContext.getBeanDefinitionNames()) {
             System.out.println(beanName);
         }
@@ -23,5 +24,4 @@ public class Application {
         System.out.println(applicationContext.getBean(BeanD.class));
 
     }
-
 }
