@@ -46,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User createUser(User user) {
-        user.setId(String.valueOf(users.size()+1));
+        user.setId(String.valueOf(users.size() + 1));
         log.info("UserRepository --> createUser {}", user);
         users.add(user);
         return user;

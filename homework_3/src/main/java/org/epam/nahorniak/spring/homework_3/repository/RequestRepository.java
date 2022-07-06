@@ -6,10 +6,15 @@ import java.util.List;
 
 public interface RequestRepository {
 
-    Request createRequest(String email,int tariffId);
+    Request createRequest(String email, int tariffId);
+
     Request closeRequest(String email);
+
     Request activateRequest(String email);
+
     Request suspendRequest(String email);
+
     List<Request> getAllByUserEmail(String email);
+
     Request getActiveOrSuspendedRequestByUserEmail(String email);
 }

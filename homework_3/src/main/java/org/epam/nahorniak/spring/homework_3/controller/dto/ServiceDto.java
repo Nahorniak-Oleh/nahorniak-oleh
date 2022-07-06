@@ -9,8 +9,10 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceDto {
 
-    public int id;
-    public String code;
-    public String title;
+    private int id;
+
+    private String code;
+
+    private String title;
 
 }

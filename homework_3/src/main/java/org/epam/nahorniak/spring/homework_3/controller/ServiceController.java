@@ -27,27 +27,27 @@ public class ServiceController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/service/{id}")
     public ServiceDto getTariffById(@PathVariable int id) {
-        log.info("get service by id {}",id);
+        log.info("get service by id {}", id);
         return servicesService.getService(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/service")
     public ServiceDto createService(@RequestBody ServiceDto serviceDto) {
-        log.info("create service with body {}",serviceDto);
+        log.info("create service with body {}", serviceDto);
         return servicesService.createService(serviceDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/service/{id}")
     public ServiceDto ServiceDto(@PathVariable int id, @RequestBody ServiceDto serviceDto) {
-        log.info("update service by id ({}) with body {}",id,serviceDto);
-        return servicesService.updateService(id,serviceDto);
+        log.info("update service by id ({}) with body {}", id, serviceDto);
+        return servicesService.updateService(id, serviceDto);
     }
 
     @DeleteMapping(value = "/service/{id}")
     public ResponseEntity<Void> deleteService(@PathVariable int id) {
-        log.info("delete service by id ({})",id);
+        log.info("delete service by id ({})", id);
         servicesService.deleteService(id);
         return ResponseEntity.noContent().build();
     }

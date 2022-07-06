@@ -13,10 +13,12 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>homework_3</name>
     <description>homework_3</description>
+
     <properties>
         <java.version>11</java.version>
         <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -80,8 +82,6 @@
                             <version>0.2.0</version>
                         </path>
 
-
-                        <!-- other annotation processors -->
                     </annotationProcessorPaths>
 
                 </configuration>

@@ -12,7 +12,7 @@ public interface UserRepository {
 
     User createUser(User user);
 
-    User updateUser(String email,User user);
+    User updateUser(String email, User user);
 
     void deleteUser(String email);
 }

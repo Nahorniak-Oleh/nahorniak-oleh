@@ -9,11 +9,11 @@ import java.time.LocalDate;
 @Builder
 public class Request {
 
-    public int id;
-    public String userId;
-    public int tariffId;
-    public LocalDate startDate;
-    public LocalDate endDate;
-    public Status status;
+    private int id;
+    private String userId;
+    private int tariffId;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private Status status;
 
 }

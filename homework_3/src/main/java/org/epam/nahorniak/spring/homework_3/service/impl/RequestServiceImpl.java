@@ -23,8 +23,8 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestDto createRequest(String email, int tariffId) {
-        log.info("RequestService --> create request with user email ({}) and tariff id - ({})", email,tariffId);
-        Request request = requestRepository.createRequest(email,tariffId);
+        log.info("RequestService --> create request with user email ({}) and tariff id - ({})", email, tariffId);
+        Request request = requestRepository.createRequest(email, tariffId);
         return mapRequestAndSetTariff(request);
     }
 
@@ -69,7 +69,7 @@ public class RequestServiceImpl implements RequestService {
         return mapRequestAndSetTariff(request);
     }
 
-    private RequestDto mapRequestAndSetTariff(Request request){
+    private RequestDto mapRequestAndSetTariff(Request request) {
         log.info("RequestService --> map request {} to requestDto and set tariff for it ", request);
         RequestDto requestDto = RequestMapper.INSTANCE.mapRequestToRequestDto(request);
         requestDto.setTariffDto(tariffService.getTariff(request.getTariffId()));

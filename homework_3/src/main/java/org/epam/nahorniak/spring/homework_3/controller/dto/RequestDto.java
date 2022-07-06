@@ -12,10 +12,14 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RequestDto {
 
-    public int id;
-    public TariffDto tariffDto;
-    public LocalDate startDate;
-    public LocalDate endDate;
-    public Status status;
+    private int id;
+
+    private TariffDto tariffDto;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    private Status status;
 
 }

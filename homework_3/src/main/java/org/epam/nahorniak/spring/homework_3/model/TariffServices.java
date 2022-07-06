@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class TariffServices {
 
-    public int tariffId;
-    public int serviceId;
+    private int tariffId;
+    private int serviceId;
 
 }

@@ -13,7 +13,7 @@ public interface ServicesRepository {
 
     Service createService(Service service);
 
-    Service updateService(int id,Service service);
+    Service updateService(int id, Service service);
 
     void deleteService(int id);
 

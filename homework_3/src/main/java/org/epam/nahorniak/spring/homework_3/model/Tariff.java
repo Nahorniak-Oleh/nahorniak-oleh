@@ -8,10 +8,10 @@ import java.util.List;
 @Builder
 public class Tariff {
 
-    public int id;
-    public String code;
-    public String title;
-    public double price;
-    public List<Service> services;
+    private int id;
+    private String code;
+    private String title;
+    private double price;
+    private List<Service> services;
 
 }

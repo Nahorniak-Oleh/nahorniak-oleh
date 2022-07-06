@@ -12,7 +12,7 @@ public interface TariffRepository {
 
     Tariff createTariff(Tariff tariff);
 
-    Tariff updateTariff(int id,Tariff tariff);
+    Tariff updateTariff(int id, Tariff tariff);
 
     void deleteTariff(int id);
 }

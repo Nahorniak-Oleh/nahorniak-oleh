@@ -37,22 +37,22 @@ public class RequestRepositoryImpl implements RequestRepository {
     }
 
     @Override
-    public Request createRequest(String email,int tariffId) {
+    public Request createRequest(String email, int tariffId) {
 
-        log.info("RequestRepository --> create request with user email ({}) and tariff id - ({})", email,tariffId);
+        log.info("RequestRepository --> create request with user email ({}) and tariff id - ({})", email, tariffId);
         User user = userRepository.getUser(email);
-        if(user == null) throw new  RuntimeException("User is not found!");
+        if (user == null) throw new RuntimeException("User is not found!");
 
         LocalDate NOW = LocalDate.now();
 
         Request request = Request.builder()
-                .id(requests.size()+1)
-                        .userId(user.getId())
-                                .tariffId(tariffId)
-                                        .startDate(NOW)
-                                                .endDate(NOW.plusMonths(1))
-                                                    .status(Status.ACTIVE)
-                                                        .build();
+                .id(requests.size() + 1)
+                .userId(user.getId())
+                .tariffId(tariffId)
+                .startDate(NOW)
+                .endDate(NOW.plusMonths(1))
+                .status(Status.ACTIVE)
+                .build();
 
 
         requests.add(request);
@@ -100,7 +100,7 @@ public class RequestRepositoryImpl implements RequestRepository {
         log.info("RequestService --> get all requests by user email {}", email);
 
         User user = userRepository.getUser(email);
-        if(user == null) throw new  RuntimeException("User is not found!");
+        if (user == null) throw new RuntimeException("User is not found!");
         return requests.stream()
                 .filter(request -> user.getId().equals(request.getUserId()))
                 .collect(Collectors.toList());
@@ -111,10 +111,10 @@ public class RequestRepositoryImpl implements RequestRepository {
         log.info("RequestService --> get active or suspended request by user email {}", email);
 
         User user = userRepository.getUser(email);
-        if(user == null) throw new  RuntimeException("User is not found!");
+        if (user == null) throw new RuntimeException("User is not found!");
         return requests.stream()
                 .filter(request -> user.getId().equals(request.getUserId()) &&
-                        (request.getStatus().equals(Status.ACTIVE) || request.getStatus().equals(Status.SUSPENDED) ))
+                        (request.getStatus().equals(Status.ACTIVE) || request.getStatus().equals(Status.SUSPENDED)))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Request is not found!"));
     }

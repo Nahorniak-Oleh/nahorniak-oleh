@@ -12,7 +12,7 @@ public interface TariffService {
 
     TariffDto createTariff(TariffDto tariffDto);
 
-    TariffDto updateTariff(int id,TariffDto tariffDto);
+    TariffDto updateTariff(int id, TariffDto tariffDto);
 
     void deleteTariff(int id);
 

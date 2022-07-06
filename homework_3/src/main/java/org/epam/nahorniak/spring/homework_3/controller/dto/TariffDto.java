@@ -16,10 +16,14 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 public class TariffDto {
 
     @JsonProperty(access = READ_ONLY)
-    public int id;
-    public String code;
-    public String title;
-    public double price;
+    private int id;
+
+    private String code;
+
+    private String title;
+
+    private double price;
+
     @JsonProperty(access = READ_ONLY)
-    public List<ServiceDto> services;
+    private List<ServiceDto> services;
 }

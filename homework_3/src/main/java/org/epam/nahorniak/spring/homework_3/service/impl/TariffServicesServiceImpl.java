@@ -15,13 +15,13 @@ public class TariffServicesServiceImpl implements TariffServicesService {
 
     @Override
     public void addServiceToTariff(int tariffId, int serviceId) {
-        log.info("TariffServicesService --> add service to tariff by tariffId ({}) and serviceId ({})",tariffId,serviceId);
-        tariffServicesRepository.addServiceToTariff(tariffId,serviceId);
+        log.info("TariffServicesService --> add service to tariff by tariffId ({}) and serviceId ({})", tariffId, serviceId);
+        tariffServicesRepository.addServiceToTariff(tariffId, serviceId);
     }
 
     @Override
     public void deleteServiceFromTariff(int tariffId, int serviceId) {
-        log.info("TariffServicesService --> delete service from tariff by tariffId ({}) and serviceId ({})",tariffId,serviceId);
-        tariffServicesRepository.deleteServiceFromTariff(tariffId,serviceId);
+        log.info("TariffServicesService --> delete service from tariff by tariffId ({}) and serviceId ({})", tariffId, serviceId);
+        tariffServicesRepository.deleteServiceFromTariff(tariffId, serviceId);
     }
 }

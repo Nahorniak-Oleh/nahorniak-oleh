@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class ServicesRepositoryImpl implements ServicesRepository {
 
-   private final TariffServicesRepository tariffServicesRepository;
+    private final TariffServicesRepository tariffServicesRepository;
 
     List<Service> services = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public class ServicesRepositoryImpl implements ServicesRepository {
 
     @Override
     public Service getService(int id) {
-        log.info("ServiceRepository --> get service by id {}",id);
+        log.info("ServiceRepository --> get service by id {}", id);
         return services.stream()
                 .filter(service -> service.getId() == id)
                 .findFirst()
@@ -48,14 +48,14 @@ public class ServicesRepositoryImpl implements ServicesRepository {
     @Override
     public Service createService(Service service) {
         service.setId(services.size() + 1);
-        log.info("ServiceRepository --> create service with body {}",service);
+        log.info("ServiceRepository --> create service with body {}", service);
         services.add(service);
         return service;
     }
 
     @Override
     public Service updateService(int id, Service service) {
-        log.info("ServiceRepository --> update service by id ({}) with body {}",id,service);
+        log.info("ServiceRepository --> update service by id ({}) with body {}", id, service);
 
         boolean isDeleted = services.removeIf(u -> u.getId() == id);
         if (isDeleted) {
@@ -69,17 +69,17 @@ public class ServicesRepositoryImpl implements ServicesRepository {
 
     @Override
     public void deleteService(int id) {
-        log.info("ServiceRepository --> delete service by id ({})",id);
+        log.info("ServiceRepository --> delete service by id ({})", id);
         services.removeIf(u -> u.getId() == id);
         tariffServicesRepository.deleteByServiceId(id);
     }
 
     @Override
     public List<Service> getAllByTariffId(int tariffId) {
-        log.info("ServiceRepository --> get all services by tariffId ({})",tariffId);
+        log.info("ServiceRepository --> get all services by tariffId ({})", tariffId);
         List<Integer> servicesByTariff = tariffServicesRepository.getServicesByTariffId(tariffId);
         List<Service> servicesList = new ArrayList<>();
-        servicesByTariff.forEach(item-> servicesList.add(services.get(item - 1)));
+        servicesByTariff.forEach(item -> servicesList.add(services.get(item - 1)));
         return servicesList;
     }
 }

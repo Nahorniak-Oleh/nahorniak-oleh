@@ -7,17 +7,17 @@ import lombok.Data;
 @Builder
 public class User {
 
-    public String id;
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String phone;
-    public String password;
-    public Role role;
-    public boolean isBlocked;
-    public String street;
-    public String country;
-    public String city;
-    public double balance;
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String password;
+    private Role role;
+    private boolean blocked;
+    private String street;
+    private String country;
+    private String city;
+    private double balance;
 
 }

@@ -1,6 +1,7 @@
 package org.epam.nahorniak.spring.homework_3.service;
 
 import org.epam.nahorniak.spring.homework_3.controller.dto.ServiceDto;
+
 import java.util.List;
 
 public interface ServicesService {
@@ -11,7 +12,7 @@ public interface ServicesService {
 
     ServiceDto createService(ServiceDto serviceDto);
 
-    ServiceDto updateService(int id,ServiceDto serviceDto);
+    ServiceDto updateService(int id, ServiceDto serviceDto);
 
     void deleteService(int id);
 

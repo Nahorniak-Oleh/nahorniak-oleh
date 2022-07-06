@@ -27,7 +27,7 @@ public class TariffRepositoryImpl implements TariffRepository {
                         .title("Standard")
                         .code("#Standard")
                         .price(5.5)
-                      .build();
+                        .build();
 
         tariffs.add(tariff);
     }
@@ -40,7 +40,7 @@ public class TariffRepositoryImpl implements TariffRepository {
 
     @Override
     public Tariff getTariff(int id) {
-        log.info("TariffRepository --> get tariff by id {}",id);
+        log.info("TariffRepository --> get tariff by id {}", id);
         return tariffs.stream()
                 .filter(tariff -> tariff.getId() == id)
                 .findFirst()
@@ -49,8 +49,8 @@ public class TariffRepositoryImpl implements TariffRepository {
 
     @Override
     public Tariff createTariff(Tariff tariff) {
-        tariff.setId(tariffs.size()+1);
-        log.info("TariffRepository --> create tariff with body {}",tariff);
+        tariff.setId(tariffs.size() + 1);
+        log.info("TariffRepository --> create tariff with body {}", tariff);
 
         tariffs.add(tariff);
         return tariff;
@@ -58,7 +58,7 @@ public class TariffRepositoryImpl implements TariffRepository {
 
     @Override
     public Tariff updateTariff(int id, Tariff tariff) {
-        log.info("TariffRepository --> update tariff by id ({}) with body {}",id,tariff);
+        log.info("TariffRepository --> update tariff by id ({}) with body {}", id, tariff);
 
         boolean isDeleted = tariffs.removeIf(u -> u.getId() == id);
         if (isDeleted) {
@@ -72,7 +72,7 @@ public class TariffRepositoryImpl implements TariffRepository {
 
     @Override
     public void deleteTariff(int id) {
-        log.info("TariffRepository --> delete tariff by id ({})",id);
+        log.info("TariffRepository --> delete tariff by id ({})", id);
         tariffs.removeIf(u -> u.getId() == id);
         tariffServicesRepository.deleteByTariffId(id);
     }

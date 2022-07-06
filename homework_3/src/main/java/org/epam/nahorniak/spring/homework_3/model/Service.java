@@ -7,8 +7,8 @@ import lombok.Data;
 @Builder
 public class Service {
 
-    public int id;
-    public String code;
-    public String title;
+    private int id;
+    private String code;
+    private String title;
 
 }
