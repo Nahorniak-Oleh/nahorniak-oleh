@@ -1,6 +1,7 @@
 package org.epam.nahorniak.spring.internetserviceprovider.repository.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.epam.nahorniak.spring.internetserviceprovider.model.Role;
 import org.epam.nahorniak.spring.internetserviceprovider.model.User;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.UserRepository;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .firstName("Oleh")
                 .lastName("Nahorniak")
                 .password("111Test")
+                .role(Role.CUSTOMER)
                 .phone("+380666666666")
                 .country("Ukraine")
                 .city("Lviv")
@@ -68,5 +70,10 @@ public class UserRepositoryImpl implements UserRepository {
     public void deleteUser(String email) {
         log.info("UserRepository --> deleteUser with email {}", email);
         users.removeIf(user -> user.getEmail().equals(email));
+    }
+
+    @Override
+    public long countByRole(Role role) {
+        return users.stream().filter(user -> user.getRole().equals(role)).count();
     }
 }
