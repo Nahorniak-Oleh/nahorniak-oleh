@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,14 +36,14 @@ public class TariffController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/tariff")
-    public TariffDto createTariff(@RequestBody TariffDto tariffDto) {
+    public TariffDto createTariff(@RequestBody @Valid TariffDto tariffDto) {
         log.info("create tariff with body {}", tariffDto);
         return tariffService.createTariff(tariffDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/tariff/{id}")
-    public TariffDto updateTariff(@PathVariable int id, @RequestBody TariffDto tariffDto) {
+    public TariffDto updateTariff(@PathVariable int id, @RequestBody @Valid TariffDto tariffDto) {
         log.info("update tariff by id ({}) with body {}", id, tariffDto);
         return tariffService.updateTariff(id, tariffDto);
     }

@@ -23,7 +23,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .lastName("Nahorniak")
                 .password("111Test")
                 .role(Role.CUSTOMER)
-                .phone("+380666666666")
+                .phone("(202) 555-0125")
                 .country("Ukraine")
                 .city("Lviv")
                 .street("Shevchenka St 111a").build();
@@ -49,6 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User createUser(User user) {
         user.setId(String.valueOf(users.size() + 1));
+        user.setBalance(0);
         log.info("UserRepository --> createUser {}", user);
         users.add(user);
         return user;
@@ -57,8 +58,13 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User updateUser(String email, User user) {
         log.info("UserRepository --> updateUser with email {}", email);
+        User oldUser = getUser(email);
         boolean isDeleted = users.removeIf(u -> u.getEmail().equals(email));
         if (isDeleted) {
+            user.setId(oldUser.getId());
+            user.setBalance(oldUser.getBalance());
+            user.setRole(oldUser.getRole());
+            user.setEmail(oldUser.getEmail());
             users.add(user);
         } else {
             throw new RuntimeException("User is not found!");

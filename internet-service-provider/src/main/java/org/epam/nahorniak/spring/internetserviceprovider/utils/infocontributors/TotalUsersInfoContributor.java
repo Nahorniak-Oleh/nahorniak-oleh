@@ -1,4 +1,4 @@
-package org.epam.nahorniak.spring.internetserviceprovider.infocontributors;
+package org.epam.nahorniak.spring.internetserviceprovider.utils.infocontributors;
 
 import lombok.RequiredArgsConstructor;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Role;
@@ -24,7 +24,7 @@ public class TotalUsersInfoContributor implements InfoContributor {
         Arrays.stream(Role.values())
                 .forEach(role ->
                         userDetails.put(role.toString(), userRepository.countByRole(role)));
-        
+
         builder.withDetail("users",userDetails);
     }
 }

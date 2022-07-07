@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,14 +34,14 @@ public class ServiceController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/service")
-    public ServiceDto createService(@RequestBody ServiceDto serviceDto) {
+    public ServiceDto createService(@RequestBody @Valid ServiceDto serviceDto) {
         log.info("create service with body {}", serviceDto);
         return servicesService.createService(serviceDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/service/{id}")
-    public ServiceDto ServiceDto(@PathVariable int id, @RequestBody ServiceDto serviceDto) {
+    public ServiceDto ServiceDto(@PathVariable int id, @RequestBody @Valid ServiceDto serviceDto) {
         log.info("update service by id ({}) with body {}", id, serviceDto);
         return servicesService.updateService(id, serviceDto);
     }

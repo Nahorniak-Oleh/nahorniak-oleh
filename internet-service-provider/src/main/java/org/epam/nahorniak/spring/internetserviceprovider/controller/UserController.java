@@ -6,8 +6,11 @@ import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.RequestD
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.UserDto;
 import org.epam.nahorniak.spring.internetserviceprovider.service.RequestService;
 import org.epam.nahorniak.spring.internetserviceprovider.service.UserService;
+import org.epam.nahorniak.spring.internetserviceprovider.controller.validation.group.OnCreate;
+import org.epam.nahorniak.spring.internetserviceprovider.controller.validation.group.OnUpdate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,14 +40,15 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/user")
-    public UserDto createUser(@RequestBody UserDto userDto) {
+    public UserDto createUser(@RequestBody @Validated(OnCreate.class) UserDto userDto) {
         log.info("createUser with email {}", userDto.getEmail());
         return userService.createUser(userDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/user/{email}")
-    public UserDto updateUser(@PathVariable String email, @RequestBody UserDto userDto) {
+    public UserDto updateUser(@PathVariable String email,
+                              @RequestBody @Validated(OnUpdate.class) UserDto userDto) {
         log.info("updateUser with email {}", email);
         return userService.updateUser(email, userDto);
     }
