@@ -37,8 +37,8 @@ public class UserDto {
     @NotBlank(message = "'phone' shouldn't be empty",groups = OnCreate.class)
     private String password;
 
-    @Null(message = "'phone' should be absent in request",groups = OnUpdate.class)
-    @NotNull(message = "'phone' shouldn't be empty",groups = OnCreate.class)
+    @Null(message = "'role' should be absent in request",groups = OnUpdate.class)
+    @NotNull(message = "'role' shouldn't be empty",groups = OnCreate.class)
     private Role role;
 
     @JsonProperty(access = READ_ONLY)
