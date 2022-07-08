@@ -40,7 +40,7 @@ public class ServiceController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/service/{id}")
-    public ServiceDto ServiceDto(@PathVariable int id, @RequestBody ServiceDto serviceDto) {
+    public ServiceDto updateService(@PathVariable int id, @RequestBody ServiceDto serviceDto) {
         log.info("update service by id ({}) with body {}", id, serviceDto);
         return servicesService.updateService(id, serviceDto);
     }
