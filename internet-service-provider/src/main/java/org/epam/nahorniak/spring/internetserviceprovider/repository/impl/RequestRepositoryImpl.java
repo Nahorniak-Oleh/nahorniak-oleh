@@ -2,6 +2,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.repository.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.epam.nahorniak.spring.internetserviceprovider.exception.EntityNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Request;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Status;
 import org.epam.nahorniak.spring.internetserviceprovider.model.User;
@@ -41,7 +42,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
         log.info("RequestRepository --> create request with user email ({}) and tariff id - ({})", email, tariffId);
         User user = userRepository.getUser(email);
-        if (user == null) throw new RuntimeException("User is not found!");
+        if (user == null) throw new EntityNotFoundException("User is not found");
 
         LocalDate NOW = LocalDate.now();
 
@@ -100,7 +101,7 @@ public class RequestRepositoryImpl implements RequestRepository {
         log.info("RequestService --> get all requests by user email {}", email);
 
         User user = userRepository.getUser(email);
-        if (user == null) throw new RuntimeException("User is not found!");
+        if (user == null) throw new EntityNotFoundException("User is not found");
         return requests.stream()
                 .filter(request -> user.getId().equals(request.getUserId()))
                 .collect(Collectors.toList());
@@ -111,11 +112,11 @@ public class RequestRepositoryImpl implements RequestRepository {
         log.info("RequestService --> get active or suspended request by user email {}", email);
 
         User user = userRepository.getUser(email);
-        if (user == null) throw new RuntimeException("User is not found!");
+        if (user == null) throw new EntityNotFoundException("User is not found");
         return requests.stream()
                 .filter(request -> user.getId().equals(request.getUserId()) &&
                         (request.getStatus().equals(Status.ACTIVE) || request.getStatus().equals(Status.SUSPENDED)))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Request is not found!"));
+                .orElseThrow(()-> new EntityNotFoundException("Request is not found"));
     }
 }

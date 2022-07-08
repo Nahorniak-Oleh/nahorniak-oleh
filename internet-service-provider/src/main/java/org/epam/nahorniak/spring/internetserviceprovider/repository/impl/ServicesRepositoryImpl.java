@@ -2,6 +2,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.repository.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.epam.nahorniak.spring.internetserviceprovider.exception.EntityNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Service;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.ServicesRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffServicesRepository;
@@ -42,7 +43,7 @@ public class ServicesRepositoryImpl implements ServicesRepository {
         return services.stream()
                 .filter(service -> service.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Service is not found!"));
+                .orElseThrow(()-> new EntityNotFoundException("Service is not found"));
     }
 
     @Override
@@ -62,7 +63,7 @@ public class ServicesRepositoryImpl implements ServicesRepository {
             service.setId(id);
             services.add(service);
         } else {
-            throw new RuntimeException("Service is not found!");
+            throw new EntityNotFoundException("Service is not found");
         }
         return service;
     }

@@ -1,6 +1,7 @@
 package org.epam.nahorniak.spring.internetserviceprovider.repository.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.epam.nahorniak.spring.internetserviceprovider.exception.EntityNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Role;
 import org.epam.nahorniak.spring.internetserviceprovider.model.User;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.UserRepository;
@@ -43,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
         return users.stream()
                 .filter(user -> user.getEmail().equals(email))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("User is not found!"));
+                .orElseThrow(()-> new EntityNotFoundException("User is not found"));
     }
 
     @Override
@@ -67,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
             user.setEmail(oldUser.getEmail());
             users.add(user);
         } else {
-            throw new RuntimeException("User is not found!");
+            throw new EntityNotFoundException("User is not found");
         }
         return user;
     }

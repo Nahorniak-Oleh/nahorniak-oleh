@@ -1,9 +1,6 @@
 package org.epam.nahorniak.spring.internetserviceprovider.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.TariffDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +10,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = "Tariff management API")
+@ApiResponses({
+        @ApiResponse(code = 400, message = "Validation Error"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+})
 @RequestMapping("/api/v1/tariffs")
 public interface TariffApi {
 

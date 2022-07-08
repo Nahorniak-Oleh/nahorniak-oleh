@@ -2,6 +2,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.repository.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.epam.nahorniak.spring.internetserviceprovider.exception.EntityNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Tariff;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffServicesRepository;
@@ -43,7 +44,7 @@ public class TariffRepositoryImpl implements TariffRepository {
         return tariffs.stream()
                 .filter(tariff -> tariff.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Tariff is not found!"));
+                .orElseThrow(()-> new EntityNotFoundException("Tariff is not found"));
     }
 
     @Override
@@ -64,7 +65,7 @@ public class TariffRepositoryImpl implements TariffRepository {
             tariff.setId(id);
             tariffs.add(tariff);
         } else {
-            throw new RuntimeException("Tariff is not found!");
+            throw new EntityNotFoundException("Tariff is not found");
         }
         return tariff;
     }
