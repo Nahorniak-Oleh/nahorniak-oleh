@@ -86,7 +86,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public RequestDto addRequest(String email,int tariffId) {
+    public RequestDto addRequest(String email,Long tariffId) {
         log.info("addRequest By User email {} and tariffId {}", email, tariffId);
         return requestService.createRequest(email, tariffId);
     }

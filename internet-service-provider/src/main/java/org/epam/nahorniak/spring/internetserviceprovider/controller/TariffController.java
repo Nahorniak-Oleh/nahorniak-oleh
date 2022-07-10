@@ -5,12 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.epam.nahorniak.spring.internetserviceprovider.api.TariffApi;
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.TariffDto;
 import org.epam.nahorniak.spring.internetserviceprovider.service.TariffService;
-import org.epam.nahorniak.spring.internetserviceprovider.service.TariffServicesService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +14,6 @@ import java.util.List;
 @Slf4j
 public class TariffController implements TariffApi {
 
-    private final TariffServicesService tariffServicesService;
     private final TariffService tariffService;
 
     @Override
@@ -28,7 +23,7 @@ public class TariffController implements TariffApi {
     }
 
     @Override
-    public TariffDto getTariffById(int id) {
+    public TariffDto getTariffById(Long id) {
         log.info("get tariff by id {}", id);
         return tariffService.getTariff(id);
     }
@@ -40,29 +35,27 @@ public class TariffController implements TariffApi {
     }
 
     @Override
-    public TariffDto updateTariff(int id,TariffDto tariffDto) {
+    public TariffDto updateTariff(Long id,TariffDto tariffDto) {
         log.info("update tariff by id ({}) with body {}", id, tariffDto);
         return tariffService.updateTariff(id, tariffDto);
     }
 
     @Override
-    public ResponseEntity<Void> deleteTariff(int id) {
+    public ResponseEntity<Void> deleteTariff(Long id) {
         log.info("delete tariff by id ({})", id);
         tariffService.deleteTariff(id);
         return ResponseEntity.noContent().build();
     }
 
     @Override
-    public TariffDto addServiceToTariff(int tariffId,int serviceId) {
+    public TariffDto addServiceToTariff(Long tariffId,Long serviceId) {
         log.info("add service to tariff by tariffId ({}) and serviceId ({})", tariffId, serviceId);
-        tariffServicesService.addServiceToTariff(tariffId, serviceId);
-        return tariffService.getTariff(tariffId);
+        return tariffService.addService(tariffId, serviceId);
     }
 
     @Override
-    public TariffDto deleteServiceFromTariff(int tariffId,int serviceId) {
+    public TariffDto deleteServiceFromTariff(Long tariffId,Long serviceId) {
         log.info("delete service from tariff by tariffId ({}) and serviceId ({})", tariffId, serviceId);
-        tariffServicesService.deleteServiceFromTariff(tariffId, serviceId);
-        return tariffService.getTariff(tariffId);
+        return tariffService.removeService(tariffId,serviceId);
     }
 }

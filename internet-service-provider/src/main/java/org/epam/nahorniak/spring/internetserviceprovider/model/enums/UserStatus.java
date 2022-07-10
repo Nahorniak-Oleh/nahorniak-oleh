@@ -1,6 +1,6 @@
 package org.epam.nahorniak.spring.internetserviceprovider.model.enums;
 
-public enum Role {
-    CUSTOMER,
-    ADMIN
+public enum UserStatus {
+    ACTIVE,
+    BLOCKED
 }

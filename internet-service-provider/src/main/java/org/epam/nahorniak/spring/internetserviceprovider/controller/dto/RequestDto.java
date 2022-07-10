@@ -3,7 +3,8 @@ package org.epam.nahorniak.spring.internetserviceprovider.controller.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import org.epam.nahorniak.spring.internetserviceprovider.model.Status;
+import org.epam.nahorniak.spring.internetserviceprovider.model.Tariff;
+import org.epam.nahorniak.spring.internetserviceprovider.model.enums.RequestStatus;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 public class RequestDto {
 
     @Positive
-    private int id;
+    private Long id;
 
     @NotNull
     private TariffDto tariffDto;
@@ -27,6 +28,6 @@ public class RequestDto {
     private LocalDate endDate;
 
     @NotNull
-    private Status status;
+    private RequestStatus status;
 
 }

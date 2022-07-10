@@ -1,21 +1,20 @@
 package org.epam.nahorniak.spring.internetserviceprovider.repository;
 
-import org.epam.nahorniak.spring.internetserviceprovider.model.Role;
 import org.epam.nahorniak.spring.internetserviceprovider.model.User;
+import org.epam.nahorniak.spring.internetserviceprovider.model.enums.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import java.util.Optional;
 
-import java.util.List;
 
-public interface UserRepository {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-    List<User> listUsers();
+    @Query("SELECT u FROM User u WHERE u.email = ?1")
+    Optional<User> findByEmail(String email);
 
-    User getUser(String email);
+    long countAllByRole(Role role);
 
-    User createUser(User user);
+    boolean existsByEmail(String email);
 
-    User updateUser(String email, User user);
-
-    void deleteUser(String email);
-
-    long countByRole(Role role);
+    boolean existsByPhone(String phone);
 }

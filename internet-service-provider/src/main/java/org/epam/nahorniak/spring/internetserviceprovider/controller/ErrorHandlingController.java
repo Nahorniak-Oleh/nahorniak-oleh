@@ -3,7 +3,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.epam.nahorniak.spring.internetserviceprovider.exception.ServiceException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Error;
-import org.epam.nahorniak.spring.internetserviceprovider.model.ErrorType;
+import org.epam.nahorniak.spring.internetserviceprovider.model.enums.ErrorType;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

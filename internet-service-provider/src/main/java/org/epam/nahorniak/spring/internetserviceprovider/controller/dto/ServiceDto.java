@@ -16,7 +16,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 public class ServiceDto {
 
     @JsonProperty(access = READ_ONLY)
-    private int id;
+    private Long id;
 
     @Pattern(regexp = "#[A-Z-]{1,15}",message = "'code' should starts with # and contain only capital letters")
     private String code;

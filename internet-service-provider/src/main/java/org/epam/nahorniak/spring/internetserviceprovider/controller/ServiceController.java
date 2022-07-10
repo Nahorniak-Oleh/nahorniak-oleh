@@ -20,13 +20,13 @@ public class ServiceController implements ServiceApi {
     private final ServicesService servicesService;
 
     @Override
-    public List<ServiceDto> getAllTariffs() {
+    public List<ServiceDto> getAllServices() {
         log.info("get all services");
         return servicesService.listServices();
     }
 
     @Override
-    public ServiceDto getTariffById(int id) {
+    public ServiceDto getServiceById(Long id) {
         log.info("get service by id {}", id);
         return servicesService.getService(id);
     }
@@ -38,13 +38,13 @@ public class ServiceController implements ServiceApi {
     }
 
     @Override
-    public ServiceDto updateService(int id,ServiceDto serviceDto) {
+    public ServiceDto updateService(Long id,ServiceDto serviceDto) {
         log.info("update service by id ({}) with body {}", id, serviceDto);
         return servicesService.updateService(id, serviceDto);
     }
 
     @Override
-    public ResponseEntity<Void> deleteService(int id) {
+    public ResponseEntity<Void> deleteService(Long id) {
         log.info("delete service by id ({})", id);
         servicesService.deleteService(id);
         return ResponseEntity.noContent().build();

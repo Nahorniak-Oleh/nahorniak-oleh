@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RequestService {
 
-    RequestDto createRequest(String email, int tariffId);
+    RequestDto createRequest(String email, Long tariffId);
 
     RequestDto closeRequest(String email);
 

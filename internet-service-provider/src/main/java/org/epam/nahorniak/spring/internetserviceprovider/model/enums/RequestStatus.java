@@ -5,7 +5,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.model.enums;
  *
  * @author Oleh Nahorniak.
  */
-public enum Status {
+public enum RequestStatus {
     ACTIVE,
     SUSPENDED,
     CLOSED;

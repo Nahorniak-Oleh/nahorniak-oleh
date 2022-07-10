@@ -44,7 +44,7 @@ public interface UserApi {
     })
     @ApiOperation("Update user")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/{email}")
+    @PatchMapping(value = "/{email}")
     UserDto updateUser(@PathVariable String email,
                               @RequestBody @Validated(OnUpdate.class) UserDto userDto);
 
@@ -102,5 +102,5 @@ public interface UserApi {
     @ApiOperation("add request to user")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/{email}/requests/addRequest/{tariffId}")
-    RequestDto addRequest(@PathVariable String email, @PathVariable int tariffId);
+    RequestDto addRequest(@PathVariable String email, @PathVariable Long tariffId);
 }

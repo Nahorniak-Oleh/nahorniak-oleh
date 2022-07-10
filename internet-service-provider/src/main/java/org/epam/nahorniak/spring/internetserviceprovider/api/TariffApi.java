@@ -29,7 +29,7 @@ public interface TariffApi {
     @ApiOperation("Get tariff by id")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
-    TariffDto getTariffById(@PathVariable int id);
+    TariffDto getTariffById(@PathVariable Long id);
 
     @ApiOperation("Create tariff")
     @ResponseStatus(HttpStatus.CREATED)
@@ -41,12 +41,12 @@ public interface TariffApi {
     })
     @ApiOperation("Update tariff")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/{id}")
-    TariffDto updateTariff(@PathVariable int id, @RequestBody @Valid TariffDto tariffDto);
+    @PatchMapping(value = "/{id}")
+    TariffDto updateTariff(@PathVariable Long id, @RequestBody @Valid TariffDto tariffDto);
 
     @ApiOperation("Delete tariff")
     @DeleteMapping(value = "/{id}")
-    ResponseEntity<Void> deleteTariff(@PathVariable int id);
+    ResponseEntity<Void> deleteTariff(@PathVariable Long id);
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tariffId", paramType = "path", required = true, value = "Tariff id"),
@@ -54,15 +54,15 @@ public interface TariffApi {
     })
     @ApiOperation("Add service to tariff")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/{tariffId}/{serviceId}")
-    TariffDto addServiceToTariff(@PathVariable int tariffId, @PathVariable int serviceId);
+    @PatchMapping(value = "/{tariffId}/addService/{serviceId}")
+    TariffDto addServiceToTariff(@PathVariable Long tariffId, @PathVariable Long serviceId);
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tariffId", paramType = "path", required = true, value = "Tariff id"),
             @ApiImplicitParam(name = "serviceId", paramType = "path", required = true, value = "Service id")
     })
     @ApiOperation("Add service to tariff")
-    @DeleteMapping(value = "/{tariffId}/{serviceId}")
-    TariffDto deleteServiceFromTariff(@PathVariable int tariffId, @PathVariable int serviceId);
+    @PatchMapping(value = "/{tariffId}/deleteService/{serviceId}")
+    TariffDto deleteServiceFromTariff(@PathVariable Long tariffId, @PathVariable Long serviceId);
 
 }

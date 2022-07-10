@@ -4,12 +4,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.ServiceDto;
+import org.epam.nahorniak.spring.internetserviceprovider.exception.ServiceNotFoundException;
+import org.epam.nahorniak.spring.internetserviceprovider.exception.TariffNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.mapper.ServicesMapper;
-import org.epam.nahorniak.spring.internetserviceprovider.repository.ServicesRepository;
+import org.epam.nahorniak.spring.internetserviceprovider.model.ServiceModel;
+import org.epam.nahorniak.spring.internetserviceprovider.model.Tariff;
+import org.epam.nahorniak.spring.internetserviceprovider.repository.ServiceRepository;
+import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.ServicesService;
+import org.epam.nahorniak.spring.internetserviceprovider.service.update.UpdateService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -17,52 +24,55 @@ import java.util.List;
 @Slf4j
 public class ServicesServiceImpl implements ServicesService {
 
-    private final ServicesRepository servicesRepository;
+    private final ServiceRepository serviceRepository;
+    private final TariffRepository tariffRepository;
+
+    private final UpdateService<ServiceModel,ServiceDto> updateService;
 
     @Override
     public List<ServiceDto> listServices() {
         log.info("ServicesService --> get all services");
-        List<org.epam.nahorniak.spring.internetserviceprovider.model.Service> servicesList = servicesRepository.listServices();
+        List<ServiceModel> servicesList = serviceRepository.findAll();
         List<ServiceDto> services = ServicesMapper.INSTANCE.mapListOfServicesToListOfDto(servicesList);
         return services;
     }
 
     @Override
-    public ServiceDto getService(int id) {
+    public ServiceDto getService(Long id) {
         log.info("ServicesService --> get service by id {}", id);
-        return ServicesMapper
-                .INSTANCE
-                .mapServiceToServiceDto(servicesRepository.getService(id));
+        ServiceModel service= serviceRepository.findServiceById(id).orElseThrow(ServiceNotFoundException::new);
+        return ServicesMapper.INSTANCE.mapServiceToServiceDto(service);
     }
 
     @Override
     public ServiceDto createService(ServiceDto serviceDto) {
         log.info("ServicesService --> create service with body {}", serviceDto);
-        org.epam.nahorniak.spring.internetserviceprovider.model.Service service =
+        ServiceModel service =
                 ServicesMapper.INSTANCE.mapServiceDtoToService(serviceDto);
-        service = servicesRepository.createService(service);
+        service = serviceRepository.save(service);
         return ServicesMapper.INSTANCE.mapServiceToServiceDto(service);
     }
 
     @Override
-    public ServiceDto updateService(int id, ServiceDto serviceDto) {
+    public ServiceDto updateService(Long id, ServiceDto serviceDto) {
         log.info("ServicesService --> update service by id ({}) with body {}", id, serviceDto);
-        org.epam.nahorniak.spring.internetserviceprovider.model.Service service =
-                ServicesMapper.INSTANCE.mapServiceDtoToService(serviceDto);
-        service = servicesRepository.updateService(id, service);
-        return ServicesMapper.INSTANCE.mapServiceToServiceDto(service);
+        ServiceModel persistedService = serviceRepository.findServiceById(id).orElseThrow(ServiceNotFoundException::new);
+        ServiceModel storedService = serviceRepository.save(persistedService);
+        return ServicesMapper.INSTANCE.mapServiceToServiceDto(persistedService);
     }
 
     @Override
-    public void deleteService(int id) {
+    public void deleteService(Long id) {
         log.info("ServicesService --> delete service by id ({})", id);
-        servicesRepository.deleteService(id);
+        ServiceModel service=
+                serviceRepository.findServiceById(id).orElseThrow(ServiceNotFoundException::new);
+        serviceRepository.delete(service);
     }
 
     @Override
-    public List<ServiceDto> getAllByTariffId(int tariffId) {
+    public Set<ServiceDto> getAllByTariffId(Long tariffId) {
         log.info("ServicesService --> get all services by tariffId ({})", tariffId);
-        List<org.epam.nahorniak.spring.internetserviceprovider.model.Service> services = servicesRepository.getAllByTariffId(tariffId);
-        return ServicesMapper.INSTANCE.mapListOfServicesToListOfDto(services);
+        Tariff tariff = tariffRepository.findTariffById(tariffId).orElseThrow(TariffNotFoundException::new);
+        return ServicesMapper.INSTANCE.mapSetOfServicesToSetOfDto(tariff.getServices());
     }
 }

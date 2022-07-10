@@ -2,7 +2,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.epam.nahorniak.spring.internetserviceprovider.model.ErrorType;
+import org.epam.nahorniak.spring.internetserviceprovider.model.enums.ErrorType;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

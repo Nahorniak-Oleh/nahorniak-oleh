@@ -21,7 +21,7 @@ public interface ServiceApi {
     @ApiOperation("Get all services")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    List<ServiceDto> getAllTariffs();
+    List<ServiceDto> getAllServices();
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Service id")
@@ -29,7 +29,7 @@ public interface ServiceApi {
     @ApiOperation("Get service by id")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
-    ServiceDto getTariffById(@PathVariable int id);
+    ServiceDto getServiceById(@PathVariable Long id);
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Service id")
@@ -44,10 +44,10 @@ public interface ServiceApi {
     })
     @ApiOperation("Update service")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/{id}")
-    ServiceDto updateService(@PathVariable int id, @RequestBody @Valid ServiceDto serviceDto);
+    @PatchMapping(value = "/{id}")
+    ServiceDto updateService(@PathVariable Long id, @RequestBody @Valid ServiceDto serviceDto);
 
     @ApiOperation("Delete service")
     @DeleteMapping(value = "/{id}")
-    ResponseEntity<Void> deleteService(@PathVariable int id);
+    ResponseEntity<Void> deleteService(@PathVariable Long id);
 }
