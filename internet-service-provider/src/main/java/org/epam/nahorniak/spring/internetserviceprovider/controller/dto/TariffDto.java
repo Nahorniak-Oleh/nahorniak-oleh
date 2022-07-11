@@ -9,7 +9,6 @@ import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
-
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -26,4 +25,5 @@ public class TariffDto {
 
     @JsonProperty(access = READ_ONLY)
     private List<ServiceDto> services;
+
 }

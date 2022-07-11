@@ -31,4 +31,5 @@ public class UserDto {
     private String city;
 
     private double balance;
+
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -97,6 +96,4 @@ public class UserController {
         log.info("addRequest By User email {} and tariffId {}", email, tariffId);
         return requestService.createRequest(email, tariffId);
     }
-
-
 }
