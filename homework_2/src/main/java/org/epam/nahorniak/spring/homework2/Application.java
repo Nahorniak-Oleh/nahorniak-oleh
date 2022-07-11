@@ -7,21 +7,24 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Application {
     public static void main(String[] args) {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(FirstPartBeansConfiguration.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(FirstPartBeansConfiguration.class);
         System.out.println("\n------------------ApplicationContext--------------------");
 
-        for (String beanName : applicationContext.getBeanDefinitionNames()) {
-            System.out.println(beanName);
+        for (String beanDefinitionName : context.getBeanDefinitionNames()) {
+            System.out.println(beanDefinitionName);
+            System.out.println(context.getBeanDefinition(beanDefinitionName));
         }
+
         System.out.println("------------------ApplicationContext--------------------");
 
         System.out.println("------------------Lazy bean ------------------");
-        applicationContext.getBean(BeanF.class);
+        context.getBean(BeanF.class);
 
         System.out.println("------------------Beans configured by properties file");
-        System.out.println(applicationContext.getBean(BeanB.class));
-        System.out.println(applicationContext.getBean(BeanC.class));
-        System.out.println(applicationContext.getBean(BeanD.class));
+        System.out.println(context.getBean(BeanB.class));
+        System.out.println(context.getBean(BeanC.class));
+        System.out.println(context.getBean(BeanD.class));
 
+        context.close();
     }
 }

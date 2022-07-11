@@ -4,6 +4,7 @@ import org.epam.nahorniak.spring.homework2.beans.BeanB;
 import org.epam.nahorniak.spring.homework2.beans.BeanC;
 import org.epam.nahorniak.spring.homework2.beans.BeanD;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 
@@ -13,41 +14,17 @@ import org.springframework.core.env.Environment;
 @PropertySource("classpath:application.properties")
 public class FirstPartBeansConfiguration {
 
-    private static final Integer ZERO_NUMBER = 0;
-    private final Environment environment;
-
-    @Autowired
-    public FirstPartBeansConfiguration(Environment environment) {
-        this.environment = environment;
+    @DependsOn("beanD")
+    @Bean(initMethod = "beanBInitMethod", destroyMethod = "beanBDestructionMethod")
+    public BeanB beanB(@Value("${beanB.name}") final String name, @Value("${beanB.value}") final int value) {
+        System.out.println("BeanB created");
+        return new BeanB(name,value);
     }
 
     @Bean(initMethod = "beanCInitMethod", destroyMethod = "beanCDestructionMethod")
-    @DependsOn({"beanD", "beanB"})
-    public BeanC beanC() {
+    @DependsOn("beanB")
+    public BeanC beanC(@Value("${beanC.name}") final String name, @Value("${beanC.value}") final int value) {
         System.out.println("BeanC created");
-        return new BeanC(
-                environment.getProperty("beanC.name"),
-                getIntegerValueFromPropertyFile(environment.getProperty("beanC.value")));
+        return new BeanC(name,value);
     }
-
-    @Bean(initMethod = "beanDInitMethod", destroyMethod = "beanDDestructionMethod")
-    public BeanD beanD() {
-        System.out.println("BeanD created");
-        return new BeanD(
-                environment.getProperty("beanD.name"),
-                getIntegerValueFromPropertyFile(environment.getProperty("beanD.value")));
-    }
-
-    @Bean(initMethod = "beanBInitMethod", destroyMethod = "beanBDestructionMethod")
-    public BeanB beanB() {
-        System.out.println("BeanB created");
-        return new BeanB(
-                environment.getProperty("beanB.name"),
-                getIntegerValueFromPropertyFile(environment.getProperty("beanB.value")));
-    }
-
-    private Integer getIntegerValueFromPropertyFile(String value) {
-        return value.matches("\\D+") ? ZERO_NUMBER : Integer.valueOf(value);
-    }
-
 }
