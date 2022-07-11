@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface ServicesService {
 
-    List<ServiceDto> listServices();
+    List<ServiceDto> listServices(int page,int size);
 
     ServiceDto getService(Long id);
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TariffService {
 
-    List<TariffDto> listTariffs();
+    List<TariffDto> listTariffs(int page,int size);
 
     TariffDto getTariff(Long id);
 

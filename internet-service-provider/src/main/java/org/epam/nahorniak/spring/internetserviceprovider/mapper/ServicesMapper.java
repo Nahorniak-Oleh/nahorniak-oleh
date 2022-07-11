@@ -1,6 +1,5 @@
 package org.epam.nahorniak.spring.internetserviceprovider.mapper;
 
-import com.google.common.util.concurrent.Service;
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.ServiceDto;
 import org.epam.nahorniak.spring.internetserviceprovider.model.ServiceModel;
 import org.mapstruct.Mapper;

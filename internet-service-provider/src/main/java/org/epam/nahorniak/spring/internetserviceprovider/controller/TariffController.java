@@ -17,9 +17,9 @@ public class TariffController implements TariffApi {
     private final TariffService tariffService;
 
     @Override
-    public List<TariffDto> getAllTariffs() {
+    public List<TariffDto> getAllTariffs(int page,int size) {
         log.info("get all tariffs");
-        return tariffService.listTariffs();
+        return tariffService.listTariffs(page,size);
     }
 
     @Override

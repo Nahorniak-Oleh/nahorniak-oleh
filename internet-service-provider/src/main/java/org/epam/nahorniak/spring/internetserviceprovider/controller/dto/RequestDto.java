@@ -3,7 +3,6 @@ package org.epam.nahorniak.spring.internetserviceprovider.controller.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import org.epam.nahorniak.spring.internetserviceprovider.model.Tariff;
 import org.epam.nahorniak.spring.internetserviceprovider.model.enums.RequestStatus;
 
 import javax.validation.constraints.NotNull;

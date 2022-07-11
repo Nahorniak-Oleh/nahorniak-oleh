@@ -21,7 +21,7 @@ public interface TariffApi {
     @ApiOperation("Get all tariffs")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    List<TariffDto> getAllTariffs();
+    List<TariffDto> getAllTariffs(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size);
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Tariff id")

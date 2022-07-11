@@ -7,14 +7,10 @@ import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.RequestD
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.UserDto;
 import org.epam.nahorniak.spring.internetserviceprovider.service.RequestService;
 import org.epam.nahorniak.spring.internetserviceprovider.service.UserService;
-import org.epam.nahorniak.spring.internetserviceprovider.controller.validation.group.OnCreate;
-import org.epam.nahorniak.spring.internetserviceprovider.controller.validation.group.OnUpdate;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +21,9 @@ public class UserController implements UserApi {
     private final RequestService requestService;
 
     @Override
-    public List<UserDto> getAllUsers() {
+    public List<UserDto> getAllUsers(int page,int size) {
         log.info("get all users");
-        return userService.listUsers();
+        return userService.listUsers(page,size);
     }
 
     @Override
@@ -56,9 +52,9 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public List<RequestDto> getAllRequestsByUser(String email) {
+    public List<RequestDto> getAllRequestsByUser(String email,int page,int size) {
         log.info("getAllRequests By User email {}", email);
-        return requestService.getAllByUserEmail(email);
+        return requestService.getAllByUserEmail(email,page,size);
     }
 
     @Override

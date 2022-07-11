@@ -24,7 +24,7 @@ public interface UserApi {
     @ApiOperation("Get all users")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    List<UserDto> getAllUsers();
+    List<UserDto> getAllUsers( @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size);
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "email", paramType = "path", required = true, value = "User email")
@@ -61,7 +61,9 @@ public interface UserApi {
     @ApiOperation("get all user's requests")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{email}/requests")
-    List<RequestDto> getAllRequestsByUser(@PathVariable String email);
+    List<RequestDto> getAllRequestsByUser(@PathVariable String email,
+                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "2") int size);
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "email", paramType = "path", required = true, value = "User email")

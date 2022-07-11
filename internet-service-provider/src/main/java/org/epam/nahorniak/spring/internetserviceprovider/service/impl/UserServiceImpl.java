@@ -10,8 +10,12 @@ import org.epam.nahorniak.spring.internetserviceprovider.model.User;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.UserRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.update.UpdateService;
 import org.epam.nahorniak.spring.internetserviceprovider.service.UserService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j
@@ -24,9 +28,10 @@ public class UserServiceImpl implements UserService {
     private final UpdateService<User,UserDto> updateService;
 
     @Override
-    public List<UserDto> listUsers() {
+    public List<UserDto> listUsers(int page,int size) {
         log.info("UserService --> get all users");
-        List<User> users = userRepository.findAll();
+        Pageable pageable = PageRequest.of(page, size, Sort.by("lastName").ascending());
+        List<User> users = userRepository.findAll(pageable).getContent();
         return UserMapper.INSTANCE.mapListOfUserToListOfDto(users);
     }
 
@@ -37,6 +42,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.INSTANCE.mapUserToUserDto(user);
     }
 
+    @Transactional
     @Override
     public UserDto createUser(UserDto userDto) {
         log.info("UserService --> createUser {}", userDto);
@@ -51,6 +57,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.INSTANCE.mapUserToUserDto(user);
     }
 
+    @Transactional
     @Override
     public UserDto updateUser(String email, UserDto userDto) {
         log.info("UserService --> updateUser with email {}", email);
@@ -63,6 +70,7 @@ public class UserServiceImpl implements UserService {
         return UserMapper.INSTANCE.mapUserToUserDto(persistedUser);
     }
 
+    @Transactional
     @Override
     public void deleteUser(String email) {
         log.info("UserService --> deleteUser with email {}", email);

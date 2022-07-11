@@ -13,8 +13,12 @@ import org.epam.nahorniak.spring.internetserviceprovider.repository.ServiceRepos
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.ServicesService;
 import org.epam.nahorniak.spring.internetserviceprovider.service.update.UpdateService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 
@@ -30,9 +34,10 @@ public class ServicesServiceImpl implements ServicesService {
     private final UpdateService<ServiceModel,ServiceDto> updateService;
 
     @Override
-    public List<ServiceDto> listServices() {
+    public List<ServiceDto> listServices(int page,int size) {
         log.info("ServicesService --> get all services");
-        List<ServiceModel> servicesList = serviceRepository.findAll();
+        Pageable pageable = PageRequest.of(page,size, Sort.by("id").ascending());
+        List<ServiceModel> servicesList = serviceRepository.findAll(pageable).getContent();
         List<ServiceDto> services = ServicesMapper.INSTANCE.mapListOfServicesToListOfDto(servicesList);
         return services;
     }
@@ -44,6 +49,7 @@ public class ServicesServiceImpl implements ServicesService {
         return ServicesMapper.INSTANCE.mapServiceToServiceDto(service);
     }
 
+    @Transactional
     @Override
     public ServiceDto createService(ServiceDto serviceDto) {
         log.info("ServicesService --> create service with body {}", serviceDto);
@@ -53,6 +59,7 @@ public class ServicesServiceImpl implements ServicesService {
         return ServicesMapper.INSTANCE.mapServiceToServiceDto(service);
     }
 
+    @Transactional
     @Override
     public ServiceDto updateService(Long id, ServiceDto serviceDto) {
         log.info("ServicesService --> update service by id ({}) with body {}", id, serviceDto);
@@ -61,6 +68,7 @@ public class ServicesServiceImpl implements ServicesService {
         return ServicesMapper.INSTANCE.mapServiceToServiceDto(persistedService);
     }
 
+    @Transactional
     @Override
     public void deleteService(Long id) {
         log.info("ServicesService --> delete service by id ({})", id);
@@ -69,6 +77,7 @@ public class ServicesServiceImpl implements ServicesService {
         serviceRepository.delete(service);
     }
 
+    @Transactional
     @Override
     public Set<ServiceDto> getAllByTariffId(Long tariffId) {
         log.info("ServicesService --> get all services by tariffId ({})", tariffId);

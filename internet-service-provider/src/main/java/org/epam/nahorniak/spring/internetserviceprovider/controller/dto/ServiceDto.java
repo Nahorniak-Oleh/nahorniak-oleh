@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;

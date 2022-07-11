@@ -18,8 +18,12 @@ import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffReposi
 import org.epam.nahorniak.spring.internetserviceprovider.repository.UserRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.RequestService;
 import org.epam.nahorniak.spring.internetserviceprovider.service.TariffService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ public class RequestServiceImpl implements RequestService {
     private final TariffRepository tariffRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     @Override
     public RequestDto createRequest(String email, Long tariffId) {
         log.info("RequestService --> create request with user email ({}) and tariff id - ({})", email, tariffId);
@@ -57,6 +62,7 @@ public class RequestServiceImpl implements RequestService {
         return requestDto;
     }
 
+    @Transactional
     @Override
     public RequestDto closeRequest(String email) {
         log.info("RequestService --> close request by user email {}", email);
@@ -70,6 +76,7 @@ public class RequestServiceImpl implements RequestService {
         return requestDto;
     }
 
+    @Transactional
     @Override
     public RequestDto activateRequest(String email) {
         log.info("RequestService --> activate request by user email {}", email);
@@ -83,6 +90,7 @@ public class RequestServiceImpl implements RequestService {
         return requestDto;
     }
 
+    @Transactional
     @Override
     public RequestDto suspendRequest(String email) {
         log.info("RequestService --> suspend request by user email {}", email);
@@ -97,10 +105,11 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<RequestDto> getAllByUserEmail(String email) {
+    public List<RequestDto> getAllByUserEmail(String email,int page,int size) {
         log.info("RequestService --> get all requests by user email {}", email);
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        List<Request> requestList = requestRepository.findAllByUser(user);
+        Pageable pageable = PageRequest.of(page,size, Sort.by("startDate").ascending());
+        List<Request> requestList = requestRepository.findAllByUser(user,pageable);
         List <RequestDto> requestDtoList = new ArrayList<>();
         requestList.stream().forEach(request -> {
             RequestDto requestDto = RequestMapper.INSTANCE.mapRequestToRequestDto(request);

@@ -21,7 +21,7 @@ public interface ServiceApi {
     @ApiOperation("Get all services")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    List<ServiceDto> getAllServices();
+    List<ServiceDto> getAllServices(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size);
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Service id")

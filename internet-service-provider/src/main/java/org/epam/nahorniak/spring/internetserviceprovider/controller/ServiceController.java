@@ -5,11 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.epam.nahorniak.spring.internetserviceprovider.api.ServiceApi;
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.ServiceDto;
 import org.epam.nahorniak.spring.internetserviceprovider.service.ServicesService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,9 +18,9 @@ public class ServiceController implements ServiceApi {
     private final ServicesService servicesService;
 
     @Override
-    public List<ServiceDto> getAllServices() {
+    public List<ServiceDto> getAllServices(int page,int size) {
         log.info("get all services");
-        return servicesService.listServices();
+        return servicesService.listServices(page,size);
     }
 
     @Override

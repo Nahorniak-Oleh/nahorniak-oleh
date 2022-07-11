@@ -12,8 +12,12 @@ import org.epam.nahorniak.spring.internetserviceprovider.repository.ServiceRepos
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.TariffService;
 import org.epam.nahorniak.spring.internetserviceprovider.service.update.UpdateService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -26,9 +30,10 @@ public class TariffServiceImpl implements TariffService {
     private final UpdateService<Tariff, TariffDto> updateService;
 
     @Override
-    public List<TariffDto> listTariffs() {
+    public List<TariffDto> listTariffs(int page,int size) {
         log.info("TariffService --> get all tariffs");
-        List<Tariff> tariffs = tariffRepository.findAll();
+        Pageable pageable = PageRequest.of(page,size, Sort.by("price").descending());
+        List<Tariff> tariffs = tariffRepository.findAll(pageable).getContent();
         return TariffMapper.INSTANCE.mapListOfTariffsToListOfDto(tariffs);
     }
 
@@ -40,6 +45,7 @@ public class TariffServiceImpl implements TariffService {
         return TariffMapper.INSTANCE.mapTariffToTariffDto(tariff);
     }
 
+    @Transactional
     @Override
     public TariffDto createTariff(TariffDto tariffDto) {
         log.info("TariffService --> create tariff with body {}", tariffDto);
@@ -49,6 +55,7 @@ public class TariffServiceImpl implements TariffService {
         return TariffMapper.INSTANCE.mapTariffToTariffDto(tariff);
     }
 
+    @Transactional
     @Override
     public TariffDto updateTariff(Long id, TariffDto tariffDto) {
         log.info("TariffService --> update tariff by id ({}) with body {}", id, tariffDto);
@@ -60,6 +67,7 @@ public class TariffServiceImpl implements TariffService {
         return TariffMapper.INSTANCE.mapTariffToTariffDto(persistedTariff);
     }
 
+    @Transactional
     @Override
     public TariffDto addService(Long tariffId, Long serviceId) {
         Tariff tariff = tariffRepository.findTariffById(tariffId)
@@ -73,6 +81,7 @@ public class TariffServiceImpl implements TariffService {
         return TariffMapper.INSTANCE.mapTariffToTariffDto(tariff);
     }
 
+    @Transactional
     @Override
     public TariffDto removeService(Long tariffId, Long serviceId) {
         Tariff tariff = tariffRepository.findTariffById(tariffId)
@@ -86,6 +95,7 @@ public class TariffServiceImpl implements TariffService {
         return TariffMapper.INSTANCE.mapTariffToTariffDto(tariff);
     }
 
+    @Transactional
     @Override
     public void deleteTariff(Long id) {
         log.info("TariffService --> delete tariff by id ({})", id);

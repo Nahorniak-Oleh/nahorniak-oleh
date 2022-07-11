@@ -14,7 +14,7 @@ public interface RequestService {
 
     RequestDto suspendRequest(String email);
 
-    List<RequestDto> getAllByUserEmail(String email);
+    List<RequestDto> getAllByUserEmail(String email,int page,int size);
 
     RequestDto getActiveOrSuspendedRequestByUserEmail(String email);
 }
