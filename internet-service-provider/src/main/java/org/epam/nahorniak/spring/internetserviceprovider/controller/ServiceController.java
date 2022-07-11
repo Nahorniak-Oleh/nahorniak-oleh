@@ -19,14 +19,14 @@ public class ServiceController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/service")
-    public List<ServiceDto> getAllTariffs() {
+    public List<ServiceDto> getAllServices() {
         log.info("get all services");
         return servicesService.listServices();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/service/{id}")
-    public ServiceDto getTariffById(@PathVariable int id) {
+    public ServiceDto getServiceById(@PathVariable int id) {
         log.info("get service by id {}", id);
         return servicesService.getService(id);
     }
