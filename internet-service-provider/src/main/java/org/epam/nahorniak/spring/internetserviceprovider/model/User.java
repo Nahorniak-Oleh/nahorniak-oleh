@@ -1,6 +1,7 @@
 package org.epam.nahorniak.spring.internetserviceprovider.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.epam.nahorniak.spring.internetserviceprovider.model.enums.Role;
@@ -9,6 +10,7 @@ import org.epam.nahorniak.spring.internetserviceprovider.model.enums.UserStatus;
 import javax.persistence.*;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
