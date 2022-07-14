@@ -64,6 +64,7 @@ public class ServicesServiceImpl implements ServicesService {
     public ServiceDto updateService(Long id, ServiceDto serviceDto) {
         log.info("ServicesService --> update service by id ({}) with body {}", id, serviceDto);
         ServiceModel persistedService = serviceRepository.findServiceById(id).orElseThrow(ServiceNotFoundException::new);
+        persistedService = updateService.updateObject(persistedService,serviceDto);
         ServiceModel storedService = serviceRepository.save(persistedService);
         return ServicesMapper.INSTANCE.mapServiceToServiceDto(persistedService);
     }

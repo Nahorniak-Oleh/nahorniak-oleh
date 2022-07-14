@@ -56,6 +56,9 @@ public class UserServiceImplTest {
     private final static String MOCK_UPDATE_STREET = "Shevchenka st. 111a";
     private final static UserStatus MOCK_UPDATE_STATUS = UserStatus.ACTIVE;
 
+    private static final Integer PAGE = 0;
+    private static final Integer SIZE = 1;
+
     @BeforeEach
     public void initEach(){
         expectedUser = User.builder()
@@ -67,14 +70,13 @@ public class UserServiceImplTest {
     @Test
     void listUsersTest(){
         //given
-        int page = 0, size = 1;
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("lastName").ascending());
+        PageRequest pageRequest = PageRequest.of(PAGE, SIZE, Sort.by("lastName").ascending());
         List<User> userList = Collections.singletonList(expectedUser);
         Page<User> usersPage = new PageImpl<>(userList);
         when(userRepository.findAll(pageRequest)).thenReturn(usersPage);
 
         //when
-        List<UserDto> users = userService.listUsers(page,size);
+        List<UserDto> users = userService.listUsers(PAGE,SIZE);
 
         //then
         assertThat(users, hasSize(1));
