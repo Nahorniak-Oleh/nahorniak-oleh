@@ -3,6 +3,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @NamedNativeQuery(name = "Tariff.findTariffByCode", query = "SELECT * FROM tariff t WHERE t.code = ?",resultClass = User.class)
 public class Tariff {
@@ -31,7 +33,7 @@ public class Tariff {
             name = "tariff_services",
             joinColumns = @JoinColumn(name = "tariff_id"),
             inverseJoinColumns = @JoinColumn(name = "service_id"))
-    private Set<ServiceModel> services;
+    private Set<ServiceModel> services = new HashSet<>();
 
     public void addService(ServiceModel service){
         this.services.add(service);
