@@ -9,7 +9,8 @@ import org.epam.nahorniak.spring.internetserviceprovider.repository.ServiceRepos
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.impl.ServicesServiceImpl;
 import org.epam.nahorniak.spring.internetserviceprovider.service.update.impl.ServiceUpdateServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
+import org.epam.nahorniak.spring.internetserviceprovider.util.TestServiceDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.util.TestTariffDataUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.*;
 
+import static org.epam.nahorniak.spring.internetserviceprovider.util.TestServiceDataUtil.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,29 +46,13 @@ public class ServicesServiceImplTest {
     @Mock
     private TariffRepository tariffRepository;
 
-    private static ServiceModel expectedService;
-
-    private static final Long MOCK_ID = 1L;
-    private static final String MOCK_CODE = "#INTERNET";
-    private static final String MOCK_TITLE = "Internet";
-
-    private static final String MOCK_UPDATE_CODE = "#CELL";
-    private static final String MOCK_UPDATE_TITLE = "Cell";
-
     private static final Integer PAGE = 0;
     private static final Integer SIZE = 1;
-
-
-    @BeforeEach
-    void initEach(){
-        expectedService = ServiceModel.builder().id(MOCK_ID)
-                .code(MOCK_CODE).title(MOCK_TITLE)
-                .tariffs(new HashSet<>()).build();
-    }
 
     @Test
     void listServicesTest(){
         //given
+        ServiceModel expectedService = TestServiceDataUtil.createService();
         PageRequest pageRequest = PageRequest.of(PAGE,SIZE, Sort.by("id").ascending());
         List<ServiceModel> serviceModelList = Collections.singletonList(expectedService);
         Page<ServiceModel> serviceModelPage = new PageImpl<>(serviceModelList);
@@ -82,6 +68,7 @@ public class ServicesServiceImplTest {
     @Test
     void getServiceTest(){
         //given
+        ServiceModel expectedService = TestServiceDataUtil.createService();
         when(serviceRepository.findServiceById(MOCK_ID)).thenReturn(Optional.of(expectedService));
 
         //when
@@ -97,7 +84,8 @@ public class ServicesServiceImplTest {
     @Test
     void createServiceTest(){
         //given
-        ServiceDto createBody = ServiceDto.builder().code(MOCK_CODE).title(MOCK_CODE).build();
+        ServiceModel expectedService = TestServiceDataUtil.createService();
+        ServiceDto createBody = TestServiceDataUtil.createServiceDto();
         when(serviceRepository.save(any())).thenReturn(expectedService);
 
         //when
@@ -113,7 +101,8 @@ public class ServicesServiceImplTest {
     @Test
     void updateServiceTest(){
         //given
-        ServiceDto updateBody = ServiceDto.builder().code(MOCK_UPDATE_CODE).title(MOCK_UPDATE_TITLE).build();
+        ServiceModel expectedService = TestServiceDataUtil.createService();
+        ServiceDto updateBody = TestServiceDataUtil.createUpdateServiceDto();
         when(serviceRepository.findServiceById(MOCK_ID)).thenReturn(Optional.of(expectedService));
         when(serviceRepository.save(any())).thenReturn(expectedService);
 
@@ -130,6 +119,7 @@ public class ServicesServiceImplTest {
     @Test
     void deleteServiceTest(){
         //given
+        ServiceModel expectedService = TestServiceDataUtil.createService();
         when(serviceRepository.findServiceById(MOCK_ID)).thenReturn(Optional.of(expectedService));
         doNothing().when(serviceRepository).delete(any());
 
@@ -143,8 +133,9 @@ public class ServicesServiceImplTest {
     @Test
     void getAllByTariffIdTest(){
         //given
-        Tariff tariff = Tariff.builder().id(MOCK_ID).code(MOCK_CODE).title(MOCK_TITLE)
-                .services(Set.of(expectedService)).build();
+        ServiceModel expectedService = TestServiceDataUtil.createService();
+        Tariff tariff = TestTariffDataUtil.createTariff();
+        tariff.addService(expectedService);
         when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(tariff));
 
         //when

@@ -12,7 +12,7 @@ public class ServiceUpdateServiceImpl implements UpdateService<ServiceModel, Ser
 
     @Override
     public ServiceModel updateObject(ServiceModel updatable, ServiceDto dto) {
-        System.out.println(dto);
+
         final String code = dto.getCode();
         if(Objects.nonNull(code)){
             updatable.setCode(code);

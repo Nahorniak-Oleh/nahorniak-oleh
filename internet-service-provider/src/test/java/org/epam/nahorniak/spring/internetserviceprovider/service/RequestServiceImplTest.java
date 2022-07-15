@@ -5,29 +5,28 @@ import org.epam.nahorniak.spring.internetserviceprovider.exception.RequestNotFou
 import org.epam.nahorniak.spring.internetserviceprovider.exception.TariffNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.exception.UserNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Request;
-import org.epam.nahorniak.spring.internetserviceprovider.model.Tariff;
 import org.epam.nahorniak.spring.internetserviceprovider.model.User;
 import org.epam.nahorniak.spring.internetserviceprovider.model.enums.RequestStatus;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.RequestRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.UserRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.impl.RequestServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
+import org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil.MOCK_EMAIL;
+import static org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil.MOCK_ID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -47,32 +46,15 @@ public class RequestServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
-    private static Request expectedRequest;
-    private static User expectedUser;
-    private static Tariff expectedTariff;
-
-    private static final Long MOCK_ID = 1L;
-    private static final LocalDate MOCK_START_DATE = LocalDate.now();
-    private static final LocalDate MOCK_END_DATE = MOCK_START_DATE.plusMonths(1);
-    private static final RequestStatus MOCK_STATUS = RequestStatus.ACTIVE;
-    private final static String MOCK_EMAIL = "EMAIL@gmail.com";
-
     private static final Integer PAGE = 0;
     private static final Integer SIZE = 1;
-
-    @BeforeEach
-    void initEach(){
-        expectedUser = User.builder().email(MOCK_EMAIL).build();
-        expectedTariff = Tariff.builder().id(MOCK_ID).build();
-        expectedRequest = Request.builder().id(MOCK_ID).user(expectedUser).tariff(expectedTariff)
-                .startDate(MOCK_START_DATE).endDate(MOCK_END_DATE).status(MOCK_STATUS).build();
-    }
 
     @Test
     void createRequestTest(){
         //given
-        when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
-        when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedTariff));
+        Request expectedRequest = TestRequestDataUtil.createRequest();
+        when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedRequest.getUser()));
+        when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedRequest.getTariff()));
         when(requestRepository.save(any())).thenReturn(expectedRequest);
 
         //when
@@ -90,6 +72,8 @@ public class RequestServiceImplTest {
     @Test
     void closeRequestTest(){
         //given
+        Request expectedRequest = TestRequestDataUtil.createRequest();
+        User expectedUser = expectedRequest.getUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         when(requestRepository.getRequestByUserAndStatus(expectedUser)).thenReturn(Optional.of(expectedRequest));
         when(requestRepository.save(any())).thenReturn(expectedRequest);
@@ -104,6 +88,8 @@ public class RequestServiceImplTest {
     @Test
     void activateRequestTest(){
         //given
+        Request expectedRequest = TestRequestDataUtil.createRequest();
+        User expectedUser = expectedRequest.getUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         when(requestRepository.getRequestByUserAndStatus(expectedUser)).thenReturn(Optional.of(expectedRequest));
         when(requestRepository.save(any())).thenReturn(expectedRequest);
@@ -118,6 +104,8 @@ public class RequestServiceImplTest {
     @Test
     void suspendRequestTest(){
         //given
+        Request expectedRequest = TestRequestDataUtil.createRequest();
+        User expectedUser = expectedRequest.getUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         when(requestRepository.getRequestByUserAndStatus(expectedUser)).thenReturn(Optional.of(expectedRequest));
         when(requestRepository.save(any())).thenReturn(expectedRequest);
@@ -132,6 +120,8 @@ public class RequestServiceImplTest {
     @Test
     void getAllByUserEmailTest(){
         //given
+        Request expectedRequest = TestRequestDataUtil.createRequest();
+        User expectedUser = expectedRequest.getUser();
         PageRequest pageRequest = PageRequest.of(PAGE,SIZE, Sort.by("startDate").ascending());
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         when(requestRepository.findAllByUser(expectedUser,pageRequest))
@@ -147,6 +137,8 @@ public class RequestServiceImplTest {
     @Test
     void getActiveOrSuspendedRequestByUserEmailTest(){
         //given
+        Request expectedRequest = TestRequestDataUtil.createRequest();
+        User expectedUser = expectedRequest.getUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         when(requestRepository.getRequestByUserAndStatus(expectedUser)).thenReturn(Optional.of(expectedRequest));
 
@@ -167,6 +159,7 @@ public class RequestServiceImplTest {
 
     @Test
     void createRequestTariffNotFoundTest(){
+        User expectedUser = TestUserDataUtil.createUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         assertThrows(TariffNotFoundException.class, () -> requestService.createRequest(MOCK_EMAIL,MOCK_ID));
     }
@@ -178,6 +171,7 @@ public class RequestServiceImplTest {
 
     @Test
     void closeRequestRequestNotFoundTest(){
+        User expectedUser = TestUserDataUtil.createUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         assertThrows(RequestNotFoundException.class, () -> requestService.closeRequest(MOCK_EMAIL));
     }
@@ -189,6 +183,7 @@ public class RequestServiceImplTest {
 
     @Test
     void activateRequestRequestNotFoundTest(){
+        User expectedUser = TestUserDataUtil.createUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         assertThrows(RequestNotFoundException.class, () -> requestService.activateRequest(MOCK_EMAIL));
     }
@@ -200,6 +195,7 @@ public class RequestServiceImplTest {
 
     @Test
     void suspendRequestRequestNotFoundTest(){
+        User expectedUser = TestUserDataUtil.createUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         assertThrows(RequestNotFoundException.class, () -> requestService.suspendRequest(MOCK_EMAIL));
     }
@@ -216,6 +212,7 @@ public class RequestServiceImplTest {
 
     @Test
     void getActiveOrSuspendedRequestByUserEmailRequestNotFoundTest(){
+        User expectedUser = TestUserDataUtil.createUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         assertThrows(RequestNotFoundException.class, () -> requestService.suspendRequest(MOCK_EMAIL));
     }

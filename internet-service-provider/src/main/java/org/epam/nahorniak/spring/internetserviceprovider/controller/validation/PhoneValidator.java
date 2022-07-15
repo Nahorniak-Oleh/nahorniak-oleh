@@ -1,7 +1,5 @@
 package org.epam.nahorniak.spring.internetserviceprovider.controller.validation;
 
-import org.epam.nahorniak.spring.internetserviceprovider.controller.validation.Phone;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

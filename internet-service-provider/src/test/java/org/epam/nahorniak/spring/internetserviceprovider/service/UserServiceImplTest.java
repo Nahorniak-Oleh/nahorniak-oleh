@@ -4,11 +4,10 @@ import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.UserDto;
 import org.epam.nahorniak.spring.internetserviceprovider.exception.SuchUserAlreadyExistException;
 import org.epam.nahorniak.spring.internetserviceprovider.exception.UserNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.User;
-import org.epam.nahorniak.spring.internetserviceprovider.model.enums.UserStatus;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.UserRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.impl.UserServiceImpl;
 import org.epam.nahorniak.spring.internetserviceprovider.service.update.impl.UserUpdateServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
+import org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,14 +20,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
+import static org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
@@ -41,35 +39,13 @@ public class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
-    private static User expectedUser;
-
-    private final static String MOCK_EMAIL = "EMAIL@gmail.com";
-    private final static String MOCK_FIRST_NAME = "Stephen";
-    private final static String MOCK_LAST_NAME = "Curry";
-    private final static String MOCK_PASSWORD = "PASSWORD";
-    private final static String MOCK_PHONE = "(066) 666-6666";
-
-    private final static String MOCK_UPDATE_FIRST_NAME = "Bob";
-    private final static String MOCK_UPDATE_LAST_NAME = "Tatum";
-    private final static String MOCK_UPDATE_COUNTRY = "Ukraine";
-    private final static String MOCK_UPDATE_CITY = "Lviv";
-    private final static String MOCK_UPDATE_STREET = "Shevchenka st. 111a";
-    private final static UserStatus MOCK_UPDATE_STATUS = UserStatus.ACTIVE;
-
     private static final Integer PAGE = 0;
     private static final Integer SIZE = 1;
-
-    @BeforeEach
-    public void initEach(){
-        expectedUser = User.builder()
-                .email(MOCK_EMAIL).firstName(MOCK_FIRST_NAME)
-                .lastName(MOCK_LAST_NAME).password(MOCK_PASSWORD)
-                .build();
-    }
 
     @Test
     void listUsersTest(){
         //given
+        User expectedUser = TestUserDataUtil.createUser();
         PageRequest pageRequest = PageRequest.of(PAGE, SIZE, Sort.by("lastName").ascending());
         List<User> userList = Collections.singletonList(expectedUser);
         Page<User> usersPage = new PageImpl<>(userList);
@@ -85,15 +61,14 @@ public class UserServiceImplTest {
     @Test
     void createUserTest(){
         //given
-        UserDto createBody = UserDto.builder()
-                .email(MOCK_EMAIL).firstName(MOCK_FIRST_NAME)
-                .lastName(MOCK_LAST_NAME).password(MOCK_PASSWORD)
-                .build();
+        UserDto createBody = TestUserDataUtil.createUserDto();
+        User expectedUser = TestUserDataUtil.createUser();
         when(userRepository.save(any())).thenReturn(expectedUser);
 
         //when
         createBody = userService.createUser(createBody);
 
+        //then
         assertThat(createBody,allOf(
                 hasProperty("firstName",equalTo(expectedUser.getFirstName())),
                 hasProperty("lastName",equalTo(expectedUser.getLastName()))
@@ -103,6 +78,7 @@ public class UserServiceImplTest {
     @Test
     void getUserByEmailTest(){
         //given
+        User expectedUser = TestUserDataUtil.createUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
 
         //when
@@ -119,6 +95,7 @@ public class UserServiceImplTest {
     @Test
     void deleteUserTest() {
         //given
+        User expectedUser = TestUserDataUtil.createUser();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         doNothing().when(userRepository).delete(any());
 
@@ -132,6 +109,7 @@ public class UserServiceImplTest {
     @Test
     void updateUserWithOneFieldChangedTest(){
         //given
+        User expectedUser = TestUserDataUtil.createUser();
         UserDto updateBody = UserDto.builder().email(MOCK_EMAIL).firstName(MOCK_UPDATE_FIRST_NAME).build();
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         when(userRepository.save(any())).thenReturn(expectedUser);
@@ -150,11 +128,8 @@ public class UserServiceImplTest {
     @Test
     void updateUserWithAllFieldsChangedTest(){
         //given
-        UserDto updateBody = UserDto.builder()
-                .email(MOCK_EMAIL).firstName(MOCK_UPDATE_FIRST_NAME)
-                .lastName(MOCK_UPDATE_LAST_NAME).status(MOCK_UPDATE_STATUS)
-                .country(MOCK_UPDATE_COUNTRY).city(MOCK_UPDATE_CITY)
-                .street(MOCK_UPDATE_STREET).build();
+        User expectedUser = TestUserDataUtil.createUser();
+        UserDto updateBody = TestUserDataUtil.createUpdatedUserDto();
 
         when(userRepository.findByEmail(MOCK_EMAIL)).thenReturn(Optional.of(expectedUser));
         when(userRepository.save(any())).thenReturn(expectedUser);

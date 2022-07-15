@@ -1,5 +1,6 @@
 package org.epam.nahorniak.spring.internetserviceprovider.service;
 
+import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.ServiceDto;
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.TariffDto;
 import org.epam.nahorniak.spring.internetserviceprovider.exception.ServiceNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.exception.TariffNotFoundException;
@@ -9,7 +10,8 @@ import org.epam.nahorniak.spring.internetserviceprovider.repository.ServiceRepos
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.impl.TariffServiceImpl;
 import org.epam.nahorniak.spring.internetserviceprovider.service.update.impl.TariffUpdateServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
+import org.epam.nahorniak.spring.internetserviceprovider.util.TestServiceDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.util.TestTariffDataUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -24,6 +26,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.*;
 
+import static org.epam.nahorniak.spring.internetserviceprovider.util.TestTariffDataUtil.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -44,30 +47,14 @@ public class TariffServiceImplTest {
     @Mock
     private ServiceRepository serviceRepository;
 
-    private static Tariff expectedTariff;
-
-    private static final Long MOCK_ID = 1L;
-    private static final String MOCK_CODE = "#STANDARD";
-    private static final String MOCK_TITLE = "Standard";
-    private static final Double MOCK_PRICE = 5.5;
-
-    private static final String UPDATE_MOCK_CODE = "#FAST";
-    private static final String UPDATE_MOCK_TITLE = "Fast";
-    private static final Double UPDATE_MOCK_PRICE = 3.5;
-
     private static final Integer PAGE = 0;
     private static final Integer SIZE = 1;
 
-    @BeforeEach
-    void initEach() {
-        expectedTariff = Tariff.builder().id(MOCK_ID).code(MOCK_CODE)
-                .title(MOCK_TITLE).price(MOCK_PRICE).services(new HashSet<>())
-                .build();
-    }
 
     @Test
     void listTariffsTest(){
         //given
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
         PageRequest pageRequest = PageRequest.of(PAGE, SIZE, Sort.by("price").descending());
         List<Tariff> tariffList = Collections.singletonList(expectedTariff);
         Page<Tariff> tariffPage = new PageImpl<>(tariffList);
@@ -83,6 +70,7 @@ public class TariffServiceImplTest {
     @Test
     void getTariffTest() {
         //given
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
         when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedTariff));
 
         //when
@@ -98,8 +86,8 @@ public class TariffServiceImplTest {
     @Test
     void createTariffTest(){
         //given
-        TariffDto tariffDto = TariffDto.builder().code(MOCK_CODE)
-                .title(MOCK_TITLE).price(MOCK_PRICE).build();
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
+        TariffDto tariffDto = TestTariffDataUtil.createTariffDto();
         when(tariffRepository.save(any())).thenReturn(expectedTariff);
 
         //when
@@ -115,8 +103,8 @@ public class TariffServiceImplTest {
     @Test
     void updateTariffTest(){
         //given
-        TariffDto updateBody = TariffDto.builder().id(MOCK_ID).code(UPDATE_MOCK_CODE)
-                .title(UPDATE_MOCK_TITLE).price(UPDATE_MOCK_PRICE).build();
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
+        TariffDto updateBody = TestTariffDataUtil.createUpdatedTariffDto();
         when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedTariff));
         when(tariffRepository.save(any())).thenReturn(expectedTariff);
 
@@ -134,6 +122,7 @@ public class TariffServiceImplTest {
     @Test
     void deleteTariffTest(){
         //given
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
         when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedTariff));
         doNothing().when(tariffRepository).delete(any());
 
@@ -147,7 +136,8 @@ public class TariffServiceImplTest {
     @Test
     void addServiceTest(){
         //given
-        ServiceModel serviceModel = mock(ServiceModel.class);
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
+        ServiceModel serviceModel = TestServiceDataUtil.createService();
         when(serviceRepository.findServiceById(MOCK_ID)).thenReturn(Optional.of(serviceModel));
         when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedTariff));
         when(tariffRepository.save(any())).thenReturn(expectedTariff);
@@ -156,12 +146,19 @@ public class TariffServiceImplTest {
         TariffDto tariffDto = tariffService.addService(MOCK_ID,MOCK_ID);
 
         //then
-        assertThat(tariffDto.getServices(), hasSize(1));
+        List<ServiceDto> serviceDtoList = tariffDto.getServices();
+        assertThat(serviceDtoList,hasSize(1));
+        assertThat(serviceDtoList.get(0),allOf(
+                hasProperty("id",equalTo(serviceModel.getId())),
+                hasProperty("code",equalTo(serviceModel.getCode())),
+                hasProperty("title",equalTo(serviceModel.getTitle()))
+        ));
     }
 
     @Test
     void removeServiceTest(){
         //given
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
         ServiceModel serviceModel = mock(ServiceModel.class);
         when(serviceRepository.findServiceById(MOCK_ID)).thenReturn(Optional.of(serviceModel));
         when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedTariff));
@@ -202,6 +199,7 @@ public class TariffServiceImplTest {
 
     @Test
     void addServiceNotFoundTest(){
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
         when(serviceRepository.findServiceById(MOCK_ID)).thenReturn(Optional.empty());
         when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedTariff));
         assertThrows(ServiceNotFoundException.class, () -> tariffService.addService(MOCK_ID,MOCK_ID));
@@ -215,6 +213,7 @@ public class TariffServiceImplTest {
 
     @Test
     void removeServiceNotFoundTest(){
+        Tariff expectedTariff = TestTariffDataUtil.createTariff();
         when(serviceRepository.findServiceById(MOCK_ID)).thenReturn(Optional.empty());
         when(tariffRepository.findTariffById(MOCK_ID)).thenReturn(Optional.of(expectedTariff));
         assertThrows(ServiceNotFoundException.class, () -> tariffService.addService(MOCK_ID,MOCK_ID));
