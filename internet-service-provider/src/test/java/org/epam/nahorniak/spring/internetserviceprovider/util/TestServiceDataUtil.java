@@ -14,6 +14,8 @@ public class TestServiceDataUtil {
     public static final String MOCK_UPDATE_CODE = "#CELL";
     public static final String MOCK_UPDATE_TITLE = "Cell";
 
+    public final static String SERVICE_NOT_FOUND = "Service is not found!";
+
     public static ServiceModel createService() {
         return ServiceModel.builder()
                 .id(MOCK_ID)

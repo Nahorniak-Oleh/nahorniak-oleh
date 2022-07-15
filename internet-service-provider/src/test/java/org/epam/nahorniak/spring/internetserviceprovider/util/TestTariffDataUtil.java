@@ -1,12 +1,9 @@
 package org.epam.nahorniak.spring.internetserviceprovider.util;
 
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.TariffDto;
-import org.epam.nahorniak.spring.internetserviceprovider.model.ServiceModel;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Tariff;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class TestTariffDataUtil {
 
@@ -18,6 +15,8 @@ public class TestTariffDataUtil {
     public static final String UPDATE_MOCK_CODE = "#FAST";
     public static final String UPDATE_MOCK_TITLE = "Fast";
     public static final Double UPDATE_MOCK_PRICE = 3.5;
+
+    public final static String TARIFF_NOT_FOUND = "Tariff is not found!";
 
     public static Tariff createTariff(){
         return Tariff.builder()
