@@ -11,8 +11,8 @@ import org.epam.nahorniak.spring.internetserviceprovider.repository.RequestRepos
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.UserRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.impl.RequestServiceImpl;
-import org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil;
-import org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestRequestDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestUserDataUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,8 +25,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil.MOCK_EMAIL;
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil.MOCK_ID;
+import static org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestRequestDataUtil.MOCK_EMAIL;
+import static org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestRequestDataUtil.MOCK_ID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;

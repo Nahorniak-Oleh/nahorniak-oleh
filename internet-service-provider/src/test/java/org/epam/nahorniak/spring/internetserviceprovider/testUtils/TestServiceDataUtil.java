@@ -1,4 +1,4 @@
-package org.epam.nahorniak.spring.internetserviceprovider.util;
+package org.epam.nahorniak.spring.internetserviceprovider.testUtils;
 
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.ServiceDto;
 import org.epam.nahorniak.spring.internetserviceprovider.model.ServiceModel;

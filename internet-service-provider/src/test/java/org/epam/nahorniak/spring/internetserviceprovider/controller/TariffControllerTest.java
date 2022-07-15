@@ -7,8 +7,8 @@ import org.epam.nahorniak.spring.internetserviceprovider.exception.ServiceNotFou
 import org.epam.nahorniak.spring.internetserviceprovider.exception.TariffNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.enums.ErrorType;
 import org.epam.nahorniak.spring.internetserviceprovider.service.TariffService;
-import org.epam.nahorniak.spring.internetserviceprovider.util.TestServiceDataUtil;
-import org.epam.nahorniak.spring.internetserviceprovider.util.TestTariffDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestServiceDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestTariffDataUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,8 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestServiceDataUtil.SERVICE_NOT_FOUND;
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestTariffDataUtil.*;
+import static org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestServiceDataUtil.SERVICE_NOT_FOUND;
+import static org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestTariffDataUtil.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

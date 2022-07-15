@@ -1,4 +1,4 @@
-package org.epam.nahorniak.spring.internetserviceprovider.util;
+package org.epam.nahorniak.spring.internetserviceprovider.testUtils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -7,7 +7,7 @@ import org.epam.nahorniak.spring.internetserviceprovider.model.User;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.UserRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.service.impl.UserServiceImpl;
 import org.epam.nahorniak.spring.internetserviceprovider.service.update.impl.UserUpdateServiceImpl;
-import org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestUserDataUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil.*;
+import static org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestUserDataUtil.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {

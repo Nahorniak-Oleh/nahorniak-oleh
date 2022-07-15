@@ -11,8 +11,8 @@ import org.epam.nahorniak.spring.internetserviceprovider.model.enums.RequestStat
 import org.epam.nahorniak.spring.internetserviceprovider.model.enums.Role;
 import org.epam.nahorniak.spring.internetserviceprovider.service.RequestService;
 import org.epam.nahorniak.spring.internetserviceprovider.service.UserService;
-import org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil;
-import org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestRequestDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestUserDataUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,8 +23,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil.REQUEST_NOT_FOUND;
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil.*;
+import static org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestRequestDataUtil.REQUEST_NOT_FOUND;
+import static org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestUserDataUtil.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

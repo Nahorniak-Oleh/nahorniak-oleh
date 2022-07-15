@@ -1,13 +1,11 @@
 package org.epam.nahorniak.spring.internetserviceprovider.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.ServiceDto;
 import org.epam.nahorniak.spring.internetserviceprovider.exception.ServiceNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.enums.ErrorType;
 import org.epam.nahorniak.spring.internetserviceprovider.service.ServicesService;
-import org.epam.nahorniak.spring.internetserviceprovider.service.TariffService;
-import org.epam.nahorniak.spring.internetserviceprovider.util.TestServiceDataUtil;
+import org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestServiceDataUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestServiceDataUtil.*;
+import static org.epam.nahorniak.spring.internetserviceprovider.testUtils.TestServiceDataUtil.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
