@@ -29,6 +29,14 @@ public class TestUserDataUtil {
     public final static String MOCK_UPDATE_STREET = "Arktyczna St. 111";
     public final static UserStatus MOCK_UPDATE_STATUS = UserStatus.ACTIVE;
 
+    public final static String USER_NOT_FOUND = "User is not found!";
+    public final static String INVALID_PHONE_NUMBER = "Invalid phone number";
+    public final static String INVALID_EMAIL = "must be a well-formed email address";
+    public final static String USER_WITH_SUCH_EMAIL_ALREADY_EXISTS ="User with such email already exists";
+    public final static String USER_WITH_SUCH_PHONE_ALREADY_EXISTS ="User with such phone already exists";
+    public final static String FIRST_NAME_SHOULD_NOT_BE_EMPTY ="'first name' shouldn't be empty";
+    public final static String LAST_NAME_SHOULD_NOT_BE_EMPTY ="'last name' shouldn't be empty";
+
     public static User createUser() {
         return User.builder()
                 .firstName(MOCK_FIRST_NAME)
@@ -63,11 +71,7 @@ public class TestUserDataUtil {
         return UserDto.builder()
                 .firstName(MOCK_UPDATE_FIRST_NAME)
                 .lastName(MOCK_UPDATE_LAST_NAME)
-                .email(MOCK_EMAIL)
-                .phone(MOCK_PHONE)
-                .role(MOCK_ROLE)
                 .status(MOCK_UPDATE_STATUS)
-                .password(MOCK_PASSWORD)
                 .country(MOCK_UPDATE_COUNTRY)
                 .city(MOCK_UPDATE_CITY)
                 .street(MOCK_UPDATE_STREET)

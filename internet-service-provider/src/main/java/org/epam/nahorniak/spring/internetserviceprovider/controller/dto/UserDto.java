@@ -23,10 +23,10 @@ public class UserDto {
     @JsonProperty(access = READ_ONLY)
     private Long id;
 
-    @NotBlank(message = "'first name' shouldn't be empty",groups = OnCreate.class)
+    @NotBlank(message = "'first name' shouldn't be empty")
     private String firstName;
 
-    @NotBlank(message = "'last name' shouldn't be empty",groups = OnCreate.class)
+    @NotBlank(message = "'last name' shouldn't be empty")
     private String lastName;
 
     @Email

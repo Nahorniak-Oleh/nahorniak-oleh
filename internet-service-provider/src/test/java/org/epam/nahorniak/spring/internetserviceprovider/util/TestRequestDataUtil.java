@@ -1,5 +1,7 @@
 package org.epam.nahorniak.spring.internetserviceprovider.util;
 
+import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.RequestDto;
+import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.TariffDto;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Request;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Tariff;
 import org.epam.nahorniak.spring.internetserviceprovider.model.User;
@@ -17,12 +19,24 @@ public class TestRequestDataUtil {
 
     private static final User USER = TestUserDataUtil.createUser();
     private static final Tariff TARIFF = TestTariffDataUtil.createTariff();
+    private static final TariffDto TARIFF_DTO = TestTariffDataUtil.createTariffDto();
+
+    public final static String REQUEST_NOT_FOUND = "Request is not found!";
 
     public static Request createRequest() {
         return Request.builder()
                 .id(MOCK_ID)
                 .user(USER)
                 .tariff(TARIFF)
+                .startDate(MOCK_START_DATE)
+                .endDate(MOCK_END_DATE)
+                .status(MOCK_STATUS).build();
+    }
+
+    public static RequestDto createRequestDto() {
+        return RequestDto.builder()
+                .id(MOCK_ID)
+                .tariffDto(TARIFF_DTO)
                 .startDate(MOCK_START_DATE)
                 .endDate(MOCK_END_DATE)
                 .status(MOCK_STATUS).build();
