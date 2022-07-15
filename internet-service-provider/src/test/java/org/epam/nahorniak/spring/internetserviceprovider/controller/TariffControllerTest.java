@@ -1,6 +1,5 @@
 package org.epam.nahorniak.spring.internetserviceprovider.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.ServiceDto;
 import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.TariffDto;
@@ -20,10 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestRequestDataUtil.REQUEST_NOT_FOUND;
 import static org.epam.nahorniak.spring.internetserviceprovider.util.TestServiceDataUtil.SERVICE_NOT_FOUND;
 import static org.epam.nahorniak.spring.internetserviceprovider.util.TestTariffDataUtil.*;
-import static org.epam.nahorniak.spring.internetserviceprovider.util.TestUserDataUtil.MOCK_EMAIL;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
