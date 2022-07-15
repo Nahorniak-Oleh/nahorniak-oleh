@@ -1,0 +1,68 @@
+package org.epam.nahorniak.spring.internetserviceprovider.api;
+
+import io.swagger.annotations.*;
+import org.epam.nahorniak.spring.internetserviceprovider.controller.dto.TariffDto;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@Api(tags = "Tariff management API")
+@ApiResponses({
+        @ApiResponse(code = 400, message = "Validation Error"),
+        @ApiResponse(code = 404, message = "Not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error")
+})
+@RequestMapping("/api/v1/tariffs")
+public interface TariffApi {
+
+    @ApiOperation("Get all tariffs")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping()
+    List<TariffDto> getAllTariffs(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "2") int size);
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Tariff id")
+    })
+    @ApiOperation("Get tariff by id")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/{id}")
+    TariffDto getTariffById(@PathVariable Long id);
+
+    @ApiOperation("Create tariff")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping()
+    TariffDto createTariff(@RequestBody @Valid TariffDto tariffDto);
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", paramType = "path", required = true, value = "Tariff id")
+    })
+    @ApiOperation("Update tariff")
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping(value = "/{id}")
+    TariffDto updateTariff(@PathVariable Long id, @RequestBody @Valid TariffDto tariffDto);
+
+    @ApiOperation("Delete tariff")
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> deleteTariff(@PathVariable Long id);
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tariffId", paramType = "path", required = true, value = "Tariff id"),
+            @ApiImplicitParam(name = "serviceId", paramType = "path", required = true, value = "Service id")
+    })
+    @ApiOperation("Add service to tariff")
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping(value = "/{tariffId}/addService/{serviceId}")
+    TariffDto addServiceToTariff(@PathVariable Long tariffId, @PathVariable Long serviceId);
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tariffId", paramType = "path", required = true, value = "Tariff id"),
+            @ApiImplicitParam(name = "serviceId", paramType = "path", required = true, value = "Service id")
+    })
+    @ApiOperation("Add service to tariff")
+    @PatchMapping(value = "/{tariffId}/deleteService/{serviceId}")
+    TariffDto deleteServiceFromTariff(@PathVariable Long tariffId, @PathVariable Long serviceId);
+
+}
