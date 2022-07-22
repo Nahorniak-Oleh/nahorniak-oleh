@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface ServiceRepository extends JpaRepository<ServiceModel, Integer> {
+public interface ServiceRepository extends JpaRepository<ServiceModel, Long> {
     @Query("SELECT s FROM ServiceModel s WHERE s.id = ?1")
     Optional<ServiceModel> findServiceById(Long id);
 }

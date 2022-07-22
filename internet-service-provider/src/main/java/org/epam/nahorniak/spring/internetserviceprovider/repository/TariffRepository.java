@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface TariffRepository extends JpaRepository<Tariff, Integer> {
+public interface TariffRepository extends JpaRepository<Tariff, Long> {
     @Query("SELECT t FROM Tariff t WHERE t.id = ?1")
     Optional<Tariff> findTariffById(long id);
 }
