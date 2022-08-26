@@ -2,6 +2,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.repository.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.epam.nahorniak.spring.internetserviceprovider.exceptions.EntityNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Request;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Status;
 import org.epam.nahorniak.spring.internetserviceprovider.model.User;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RequestRepositoryImpl implements RequestRepository {
 
+    private static final String USER_IS_NOT_FOUND_MESSAGE = "User is not found!";
+    private static final String REQUEST_IS_NOT_FOUND_MESSAGE = "Request is not found!";
     private final UserRepository userRepository;
 
     List<Request> requests = new ArrayList<>();
@@ -41,7 +44,7 @@ public class RequestRepositoryImpl implements RequestRepository {
 
         log.info("RequestRepository --> create request with user email ({}) and tariff id - ({})", email, tariffId);
         User user = userRepository.getUser(email);
-        if (user == null) throw new RuntimeException("User is not found!");
+        if (user == null) throw new EntityNotFoundException(USER_IS_NOT_FOUND_MESSAGE);
 
         LocalDate NOW = LocalDate.now();
 
@@ -100,7 +103,7 @@ public class RequestRepositoryImpl implements RequestRepository {
         log.info("RequestService --> get all requests by user email {}", email);
 
         User user = userRepository.getUser(email);
-        if (user == null) throw new RuntimeException("User is not found!");
+        if (user == null) throw new EntityNotFoundException(USER_IS_NOT_FOUND_MESSAGE);
         return requests.stream()
                 .filter(request -> user.getId().equals(request.getUserId()))
                 .collect(Collectors.toList());
@@ -111,11 +114,11 @@ public class RequestRepositoryImpl implements RequestRepository {
         log.info("RequestService --> get active or suspended request by user email {}", email);
 
         User user = userRepository.getUser(email);
-        if (user == null) throw new RuntimeException("User is not found!");
+        if (user == null) throw new EntityNotFoundException(USER_IS_NOT_FOUND_MESSAGE);
         return requests.stream()
                 .filter(request -> user.getId().equals(request.getUserId()) &&
                         (request.getStatus().equals(Status.ACTIVE) || request.getStatus().equals(Status.SUSPENDED)))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Request is not found!"));
+                .orElseThrow(() -> new EntityNotFoundException(REQUEST_IS_NOT_FOUND_MESSAGE));
     }
 }

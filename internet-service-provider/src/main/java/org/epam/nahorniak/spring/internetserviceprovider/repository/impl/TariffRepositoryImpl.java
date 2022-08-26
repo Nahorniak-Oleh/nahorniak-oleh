@@ -2,6 +2,7 @@ package org.epam.nahorniak.spring.internetserviceprovider.repository.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.epam.nahorniak.spring.internetserviceprovider.exceptions.EntityNotFoundException;
 import org.epam.nahorniak.spring.internetserviceprovider.model.Tariff;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffRepository;
 import org.epam.nahorniak.spring.internetserviceprovider.repository.TariffServicesRepository;
@@ -15,6 +16,7 @@ import java.util.List;
 @Slf4j
 public class TariffRepositoryImpl implements TariffRepository {
 
+    private static final String TARIFF_IS_NOT_FOUND_MESSAGE = "Tariff is not found!";
     private final TariffServicesRepository tariffServicesRepository;
 
     private final List<Tariff> tariffs = new ArrayList<>();
@@ -43,7 +45,7 @@ public class TariffRepositoryImpl implements TariffRepository {
         return tariffs.stream()
                 .filter(tariff -> tariff.getId() == id)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Tariff is not found!"));
+                .orElseThrow(() -> new EntityNotFoundException(TARIFF_IS_NOT_FOUND_MESSAGE));
     }
 
     @Override
@@ -64,7 +66,7 @@ public class TariffRepositoryImpl implements TariffRepository {
             tariff.setId(id);
             tariffs.add(tariff);
         } else {
-            throw new RuntimeException("Tariff is not found!");
+            throw new EntityNotFoundException(TARIFF_IS_NOT_FOUND_MESSAGE);
         }
         return tariff;
     }
