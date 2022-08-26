@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.epam.nahorniak.spring.internetserviceprovider.model.enums.RequestStatus;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
