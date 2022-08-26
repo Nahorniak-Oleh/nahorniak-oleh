@@ -14,40 +14,41 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/tariff")
 public class TariffController {
 
     private final TariffServicesService tariffServicesService;
     private final TariffService tariffService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/tariff")
+    @GetMapping
     public List<TariffDto> getAllTariffs() {
         log.info("get all tariffs");
         return tariffService.listTariffs();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/tariff/{id}")
+    @GetMapping(value = "/{id}")
     public TariffDto getTariffById(@PathVariable int id) {
         log.info("get tariff by id {}", id);
         return tariffService.getTariff(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/tariff")
+    @PostMapping
     public TariffDto createTariff(@RequestBody TariffDto tariffDto) {
         log.info("create tariff with body {}", tariffDto);
         return tariffService.createTariff(tariffDto);
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/tariff/{id}")
+    @PutMapping(value = "/{id}")
     public TariffDto updateTariff(@PathVariable int id, @RequestBody TariffDto tariffDto) {
         log.info("update tariff by id ({}) with body {}", id, tariffDto);
         return tariffService.updateTariff(id, tariffDto);
     }
 
-    @DeleteMapping(value = "/tariff/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteTariff(@PathVariable int id) {
         log.info("delete tariff by id ({})", id);
         tariffService.deleteTariff(id);
@@ -55,7 +56,7 @@ public class TariffController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping(value = "/tariff/{tariffId}/{serviceId}")
+    @PutMapping(value = "/{tariffId}/{serviceId}")
     public TariffDto addServiceToTariff(@PathVariable int tariffId, @PathVariable int serviceId) {
         log.info("add service to tariff by tariffId ({}) and serviceId ({})", tariffId, serviceId);
         tariffServicesService.addServiceToTariff(tariffId, serviceId);
@@ -63,12 +64,11 @@ public class TariffController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @DeleteMapping(value = "/tariff/{tariffId}/{serviceId}")
+    @DeleteMapping(value = "/{tariffId}/{serviceId}")
     public TariffDto deleteServiceFromTariff(@PathVariable int tariffId, @PathVariable int serviceId) {
         log.info("delete service from tariff by tariffId ({}) and serviceId ({})", tariffId, serviceId);
         tariffServicesService.deleteServiceFromTariff(tariffId, serviceId);
         return tariffService.getTariff(tariffId);
     }
-
 
 }
