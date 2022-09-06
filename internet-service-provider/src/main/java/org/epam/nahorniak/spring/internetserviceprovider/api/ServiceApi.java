@@ -48,6 +48,7 @@ public interface ServiceApi {
     ServiceDto updateService(@PathVariable int id, @RequestBody @Valid ServiceDto serviceDto);
 
     @ApiOperation("Delete service")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{id}")
     ResponseEntity<Void> deleteService(@PathVariable int id);
 }

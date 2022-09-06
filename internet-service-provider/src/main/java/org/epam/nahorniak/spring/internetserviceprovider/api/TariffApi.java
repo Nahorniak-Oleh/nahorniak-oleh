@@ -45,6 +45,7 @@ public interface TariffApi {
     TariffDto updateTariff(@PathVariable int id, @RequestBody @Valid TariffDto tariffDto);
 
     @ApiOperation("Delete tariff")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{id}")
     ResponseEntity<Void> deleteTariff(@PathVariable int id);
 
@@ -62,6 +63,7 @@ public interface TariffApi {
             @ApiImplicitParam(name = "serviceId", paramType = "path", required = true, value = "Service id")
     })
     @ApiOperation("Add service to tariff")
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = "/{tariffId}/{serviceId}")
     TariffDto deleteServiceFromTariff(@PathVariable int tariffId, @PathVariable int serviceId);
 
